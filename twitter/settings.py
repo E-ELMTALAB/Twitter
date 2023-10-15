@@ -22,6 +22,7 @@ print(" the base dir is ", BASE_DIR)
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
+AUTH_USER_MODEL = 'tweet_app.User'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -90,7 +91,7 @@ WSGI_APPLICATION = 'twitter.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'twitter',
+        'NAME': 'twitter_db',
         'USER': 'postgres',
         'PASSWORD': 'arshanelmtalab1398a',
         'HOST': 'localhost',

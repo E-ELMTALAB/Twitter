@@ -18,5 +18,22 @@ def home(request):
 def test(request):
     return render(request , "tweet_app/test.html")
 
+def login_view(request):
+    # Process the form and authentication logic
+    if request.method == 'POST':
+        # ...
+        if user_is_authenticated:  # Replace with your authentication logic
+            return HttpResponseRedirect(reverse('profile'))  # Redirect to the 'profile' URL
+        else:
+            # Handle authentication failure
+    else:
+        form = LoginForm()
+
+    context = {
+        'form': form,
+    }
+    
+    return render(request, 'login.html', context)
+
 # def test2(request):
 #     return render(request , "tweet_app/social_network_wall.html")
