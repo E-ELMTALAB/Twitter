@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+
+
+<title>social network wall - Bootdey.com</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link href="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css" rel="stylesheet">
+<style type="text/css">
+    	body {
+    color: #797979;
+    background: #ddd;
+    font-family: 'Open Sans', sans-serif;
+    padding: 0px !important;
+    margin: 0px !important;
+    font-size: 13px;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-font-smoothing: antialiased;
+    margin-top:20px;
+}
+
+.panel-body {
+    background:#fff;
+}
+
+.cover-photo {
+    position: relative;
+}
+
+a:hover{
+    text-decoration:none;    
+}
+
+.fb-timeline-img img {
+    width: 100%;
+height:auto;
+max-height:280px;
+    border-radius: 4px 4px 0 0;
+    -webkit-border-radius: 4px 4px 0 0;
+}
+
+.profile-thumb img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    margin-top: -90px;
+    border: 3px solid #fff;
+}
+
+.profile-info .panel-footer ul li a {
+    color: #7a7a7a;
+}
+
+.profile-thumb {
+    float: left;
+    position: relative;
+}
+
+.p-text-area, .p-text-area:focus {
+    border: none;
+    font-weight: 300;
+    box-shadow: none;
+    color: #c3c3c3;
+    font-size: 16px;
+}
+
+
+.fb-user-mail {
+    margin: 10px 0 0 20px;
+    display: inline-block;
+}
+
+
+.fb-name  {
+    bottom: 5px;
+    left: 175px;
+    position: absolute;
+}
+
+.fb-name h2 a {
+    color: #FFFFFF;
+    text-rendering: optimizelegibility;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.8);
+    font-size: 25px;
+}
+
+.fb-user-thumb {
+    float: left;
+    width: 70px;
+    margin-right:15px;
+}
+
+.fb-user-thumb img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+}
+
+
+.fb-user-details h3 {
+    margin: 15px 0 0;
+    font-size: 18px;
+    font-weight: 300;
+}
+
+.fb-user-details p {
+    color: #c3c3c3;
+}
+
+
+.fb-user-status {
+    padding: 10px 0;
+    line-height: 20px;
+}
+
+.fb-time-action {
+    padding: 15px 0;
+}
+
+
+.fb-border {
+    border-top:1px solid #ebeef5;
+}
+
+.fb-time-action span, .fb-time-action a {
+    margin-right: 5px;
+}
+
+.fb-time-action a {
+    color: #2972a1;
+}
+
+.fb-time-action a:hover {
+    text-decoration: underline;
+}
+
+.fb-time-action span {
+    color: #5a5a5a;
+}
+
+.fb-status-container, .fb-comments li {
+    margin: 0 -15px 0 -15px;
+    padding: 0 15px;
+}
+
+.fb-gray-bg {
+    background: #f6f6f6;
+}
+
+.fb-comments li {
+    border-top:1px solid #ebeef5;
+    padding: 15px;
+}
+
+.fb-comments .cmt-thumb  {
+    width: 50px;
+    float: left;
+    margin-right: 15px;
+}
+
+.fb-comments .cmt-thumb img {
+    width: 50px;
+}
+
+.fb-comments .cmt-details {
+    padding-top: 5px;
+}
+
+
+.fb-comments .cmt-details a  {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.fb-comments .cmt-details a.like-link {
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.cmt-form {
+    display: inline-block;
+    width: 90%;
+}
+
+.cmt-form textarea{
+    height: 50px;
+    line-height: 35px;
+}
+
+.fb-timeliner h2 {
+    background: #828283;
+    color: #fff;
+    margin-top: 0;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 4px;
+    -webkit-border-radius: 4px;
+    font-weight: 300;
+}
+
+.fb-timeliner ul {
+    margin-left:15px;
+    margin-bottom: 20px;
+    list-style-type:none;
+}
+
+.fb-comments{
+    list-style-type:none;
+}
+
+.fb-timeliner ul li {
+    margin-bottom: 3px;
+}
+
+.fb-timeliner ul li a{
+    color: #999797;
+    border-left: 4px solid #d3d7dd;
+    padding-left:10px;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    display: block;
+}
+
+.fb-timeliner ul li a:hover{
+    color: #999797;
+    border-left: 4px solid #b1b1b1;
+    padding-left:10px;
+}
+
+.fb-timeliner ul li.active a{
+    color: #7a7a7a;
+    border-left: 4px solid #7a7a7a;
+    padding-left:10px;
+}
+
+.recent-highlight {
+    background: #FF6C60 !important;
+}
+    </style>
+</head>
+<body>
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+<div class="container bootstrap snippets bootdey">
+<div class="row">
+<div class="panel">
+<div class="cover-photo">
+<div class="fb-timeline-img">
+<img src="https://bootdey.com/img/Content/bg1.jpg" alt>
+</div>
+<div class="fb-name">
+<h2><a href="#">Deyson Bejarano</a></h2>
+</div>
+</div>
+<div class="panel-body">
+<div class="profile-thumb">
+<img src="https://bootdey.com/img/Content/avatar/avatar1.png" alt>
+</div>
+<a href="#" class="fb-user-mail"><span class="__cf_email__" data-cfemail="adc9cfc7ccdfccc3c2edcfc2c2d9c9c8d483cec2c0">[email&#160;protected]</span></a>
+</div>
+</div>
+<div class="panel profile-info">
+<form>
+<textarea class="form-control input-lg p-text-area" rows="2" placeholder="Whats in your mind today?"></textarea>
+</form>
+<footer class="panel-footer">
+<button type="button" class="btn btn-info pull-right">Post</button>
+<ul class="nav nav-pills">
+<li><a href="#"><i class="fa fa-map-marker"></i></a></li>
+<li><a href="#"><i class="fa fa-camera"></i></a></li>
+<li><a href="#"><i class=" fa fa-film"></i></a></li>
+<li><a href="#"><i class="fa fa-microphone"></i></a></li>
+</ul>
+</footer>
+</div>
+<div class="panel">
+<div class="panel-body">
+<div class="fb-user-thumb">
+<img src="https://bootdey.com/img/Content/avatar/avatar2.png" alt>
+</div>
+<div class="fb-user-details">
+<h3><a href="#" class="#">Margarita Elina</a></h3>
+<p>7 minutes ago near Alaska, USA</p>
+</div>
+<div class="clearfix"></div>
+<p class="fb-user-status">John is world famous professional photographer. with forward thinking clients to create beautiful, honest and amazing things that bring positive results. John is world famous professional photographer. with forward thinking clients to create beautiful, honest and amazing things that bring positive results.
+</p>
+<div class="fb-status-container fb-border">
+<div class="fb-time-action">
+<a href="#" title="Like this">Like</a>
+<span>-</span>
+<a href="#" title="Leave a comment">Comments</a>
+<span>-</span>
+<a href="#" title="Send this to friend or post it on your time line">Share</a>
+</div>
+</div>
+<div class="fb-status-container fb-border fb-gray-bg">
+<div class="fb-time-action like-info">
+<a href="#">Jhon Due,</a>
+<a href="#">Danieal Kalion</a>
+<span>and</span>
+<a href="#">40 more</a>
+<span>like this</span>
+</div>
+<ul class="fb-comments">
+<li>
+<a href="#" class="cmt-thumb">
+<img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt>
+</a>
+<div class="cmt-details">
+<a href="#">Jhone due</a>
+<span> is world famous professional photographer. with forward thinking clients to create beautiful, </span>
+<p>40 minutes ago - <a href="#" class="like-link">Like</a></p>
+</div>
+</li>
+<li>
+<a href="#" class="cmt-thumb">
+<img src="https://bootdey.com/img/Content/avatar/avatar3.png" alt>
+</a>
+<div class="cmt-details">
+<a href="#">Tawseef</a>
+<span> is world famous professional photographer. with forward thinking clients to create beautiful, </span>
+<p>34 minutes ago - <a href="#" class="like-link">Like</a></p>
+</div>
+</li>
+<li>
+<a href="#" class="cmt-thumb">
+<img src="https://bootdey.com/img/Content/avatar/avatar4.png" alt>
+</a>
+<div class="cmt-details">
+<a href="#">Jhone due</a>
+<span> is world famous professional photographer. </span>
+<p>15 minutes ago - <a href="#" class="like-link">Like</a></p>
+</div>
+</li>
+<li>
+<a href="#" class="cmt-thumb">
+<img src="https://bootdey.com/img/Content/avatar/avatar5.png" alt>
+</a>
+<div class="cmt-details">
+<a href="#">Tawseef</a>
+<span> thinking clients to create beautiful world famous professional photographer. </span>
+<p>2 minutes ago - <a href="#" class="like-link">Like</a></p>
+</div>
+</li>
+<li>
+<a href="#" class="cmt-thumb">
+<img src="https://bootdey.com/img/Content/avatar/avatar8.png" alt>
+</a>
+<div class="cmt-form">
+<textarea class="form-control" placeholder="Write a comment..." name></textarea>
+</div>
+</li>
+</ul>
+<div class="clearfix"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+<script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	
+</script>
+</body>
+</html>
