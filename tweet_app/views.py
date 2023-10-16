@@ -19,7 +19,7 @@ def home(request):
     return render(request , "tweet_app/home.html" , context=context)
 
 def test(request):
-    return render(request , "tweet_app/test.html")
+    return render(request , "tweet_app\social_network_user_profile_example.html")
 
 # def login_view(request):
 #     # Process the form and authentication logic
