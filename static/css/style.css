@@ -1,0 +1,6 @@
+/* Define the 'liked' style */
+.liked {
+    background-color: red; /* You can customize this to match your design */
+    color: white; /* Text color, change as needed */
+    /* Add any other styles you want for the 'liked' state */
+}

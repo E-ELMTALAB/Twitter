@@ -3,6 +3,7 @@ from .models import Tweet
 from .forms import LoginForm
 from django.contrib.auth import login, authenticate
 from .models import User
+from django.views.decorators.http import require_POST
 
 # Create your views here.
 def home(request):
@@ -64,3 +65,18 @@ def login_view(request):
     else:
         form = LoginForm()
     return render(request, 'tweet_app/login_page.html', {'form': form})
+
+@require_POST
+def buttons_clicked(request , pk):
+    print(" a button is clicked")
+    if request.method == 'POST':
+        for key, value in request.POST.items():
+            print(f'Key: {key}, Value: {value}')
+
+    tweets = Tweet.objects.select_related("user").all()
+    context = {
+        "tweets" : tweets
+    }
+    return render(request , "tweet_app/home.html" , context=context)
+    
+
