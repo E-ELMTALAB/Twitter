@@ -62,13 +62,16 @@
                 <div class="d-flex align-items-start">
                   <img class="rounded-circle" src="{{tweet.user.profile_picture_path.url}}" style="width:50px; height:50px;"/>
                   <div class="mx-3">
-                    <h5 class="m-0">{{tweet.user.name}}</h5>
+                    <h5 class="m-0">{{tweet.user.username}}</h5>
                     <p class="m-0">{{tweet.timestamp|timesince}}</p>
                   </div>
                 </div>
               </div>
             </div>
             <div class="card-body">
+              <div class="d-flex flex-row">
+                <p>{{tweet.text}}</p>
+              </div>
               <img src="{{tweet.image.url}}" style="width:100%;"/>
             </div>
             <div class="card-footer"></div>
