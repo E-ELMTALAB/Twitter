@@ -33,10 +33,10 @@
 
 
             <div class="d-flex align-items-start mt-5 mb-4">
-              <img class="rounded-circle" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfPbpXgPn101FMCBxc31n_-fkqO0zB8Zh9lg&usqp=CAU" style="width:70px; height:70px;"/>
+              <img class="rounded-circle" src="{{request.user.profile_picture_path.url}}" style="width:70px; height:70px;"/>
               <div class="mx-3">
-                <h5 class="m-0">the user</h5>
-                <p class="m-0">@user_name</p>
+                <h5 class="m-0">{{request.user.username}}</h5>
+                <p class="m-0">{{request.user.email}}</p>
               </div>
             </div>
 

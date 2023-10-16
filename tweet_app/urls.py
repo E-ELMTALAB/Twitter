@@ -5,6 +5,6 @@ from tweet_app import views
 urlpatterns = [
     path('home/', views.home , name="home_page"),
     path("test/" , views.test , name="test_page"),
-    # path("test2/" , views.test2 , name="test2")
+    path("login_page/" , views.login_view , name="login_page")
 ]
 

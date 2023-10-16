@@ -1,42 +1,44 @@
 from django.db import models
 from django.contrib import admin
-from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
+from django.contrib.auth.models import AbstractUser, BaseUserManager, PermissionsMixin
 from django.utils import timezone
 
 
-class UserManager(BaseUserManager):
+# class UserManager(BaseUserManager):
+#     def create_user(self, email, password=None):
+#         """
+#         Creates and saves a User with the given email, date of
+#         birth and password.
+#         """
+#         if not email:
+#             raise ValueError("Users must have an email address")
 
-  def _create_user(self, email, password, is_staff, is_superuser, **extra_fields):
-    if not email:
-        raise ValueError('Users must have an email address')
-    now = timezone.now()
-    email = self.normalize_email(email)
-    user = self.model(
-        email=email,
-        is_staff=is_staff, 
-        is_active=True,
-        is_superuser=is_superuser, 
-        last_login=now,
-        date_joined=now, 
-        **extra_fields
-    )
-    user.set_password(password)
-    user.save(using=self._db)
-    return user
+#         user = self.model(
+#             email=self.normalize_email(email),
+#         )
 
-  def create_user(self, email, password, **extra_fields):
-    return self._create_user(email, password, False, False, **extra_fields)
+#         user.set_password(password)
+#         user.save(using=self._db)
+#         return user
 
-  def create_superuser(self, email, password, **extra_fields):
-    user=self._create_user(email, password, True, True, **extra_fields)
-    return user
-
-
-class User(AbstractBaseUser, PermissionsMixin):
-    id = models.AutoField(primary_key=True)
+#     def create_superuser(self, email, password=None):
+#         """
+#         Creates and saves a superuser with the given email, date of
+#         birth and password.
+#         """
+#         user = self.create_user(
+#             email,
+#             password=password
+#         )
+#         user.is_admin = True
+#         user.save(using=self._db)
+#         return user
+    
+class User(AbstractUser):
     username = models.CharField(max_length=50, unique=True)
-    name = models.CharField(max_length=100)
-    email = models.EmailField(unique=True)
+    password = models.CharField(max_length=100 , unique=True)
+    email = models.EmailField(unique=True)    
+    id = models.AutoField(primary_key=True)
     date_of_birth = models.DateField(null=True, blank=True)
     profile_picture_path = models.ImageField(upload_to='profile_pictures_path/', null=True, blank=True)
     bio = models.TextField(null=True, blank=True)
@@ -45,35 +47,31 @@ class User(AbstractBaseUser, PermissionsMixin):
     location = models.CharField(max_length=100, null=True, blank=True)
     tweet_count = models.PositiveIntegerField(default=0)
     social_label = models.CharField(max_length=50, null=True, blank=True)
-    # date_joined = models.DateTimeField(auto_now_add=True , default='auto_now')
+
+    def __str__(self):
+        return f" {self.username}  {self.email}  {self.password}"
     
 
-    USERNAME_FIELD = 'username'
-    EMAIL_FIELD = 'email'
-    REQUIRED_FIELDS = []
 
-    objects = UserManager()
-
-    def get_absolute_url(self):
-        return "/users/%i/" % (self.pk)
-
-
-# class User(models.Model):
-#     id = models.AutoField(primary_key=True)
-#     username = models.CharField(max_length=50, unique=True)
+# class User(AbstractBaseUser, PermissionsMixin):
 #     name = models.CharField(max_length=100)
-#     email = models.EmailField(unique=True)
-#     date_of_birth = models.DateField(null=True, blank=True)
-#     profile_picture_path = models.ImageField(upload_to='profile_pictures_path/', null=True, blank=True)
-#     bio = models.TextField(null=True, blank=True)
-#     followers_count = models.PositiveIntegerField(default=0)
-#     following_count = models.PositiveIntegerField(default=0)
-#     location = models.CharField(max_length=100, null=True, blank=True)
-#     tweet_count = models.PositiveIntegerField(default=0)
-#     social_label = models.CharField(max_length=50, null=True, blank=True)
+#     is_staff = models.BooleanField(default=False)
+#     is_superuser = models.BooleanField(default=False)
+#     is_active = models.BooleanField(default=True)
+#     last_login = models.DateTimeField(null=True, blank=True)
+#     date_joined = models.DateTimeField(auto_now_add=True)
+#     # date_joined = models.DateTimeField(auto_now_add=True , default='auto_now')
+    
 
-#     def __str__(self):
-#         return self.username
+#     USERNAME_FIELD = 'email'
+#     EMAIL_FIELD = 'email'
+#     REQUIRED_FIELDS = []
+
+#     objects = UserManager()
+
+#     def get_absolute_url(self):
+#         return "/users/%i/" % (self.pk)
+
     
 class Tweet(models.Model):
     tweet_id = models.AutoField(primary_key=True)
