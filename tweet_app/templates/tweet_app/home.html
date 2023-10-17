@@ -69,6 +69,7 @@
           </div>
         </div>
 
+        {% block content %}
         <div class="d-flex flex-column overflow-auto" style="height:750px; width:600px;" >
           {% for tweet in tweets reversed%}
           <div class="card rounded shadow">
@@ -184,6 +185,8 @@
           </div>
           {% endfor %}
         </div>
+
+        {% endblock%}
 
         <div class="card rounded shadow" style="height:705px; width:300px;">
           <div class="d-flex flex-column shadow">

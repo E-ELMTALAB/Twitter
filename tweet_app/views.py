@@ -79,4 +79,5 @@ def buttons_clicked(request , pk):
     }
     return render(request , "tweet_app/home.html" , context=context)
     
-
+def profile_view(request):
+    return render(request , "tweet_app/profile_page.html" , {"request" : request})
