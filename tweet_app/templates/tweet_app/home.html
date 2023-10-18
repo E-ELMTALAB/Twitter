@@ -31,14 +31,6 @@
       } */
     </style>
 
-    <script>
-      // Capture the current scroll position
-      const scrollPosition = window.scrollY;
-
-      // Store the scroll position in local storage
-      localStorage.setItem('scrollPosition', scrollPosition);
-    </script>
-
   </head>
   <body>
     <div class="container-fluid">
@@ -162,92 +154,115 @@
               <div class="d-flex post-actions">
 
 
-                <form method="post" action="{% url 'buttons_clicked' pk=tweet.tweet_id %}" class="d-flex flex-row">
-                  {% csrf_token %}
-                  <div class="d-flx" id="like-button">
-                    <button
-                      type="submit"
-                      class="btn btn-link d-flex align-items-center text-muted mx-4"
-                      name="like_button_{{tweet.tweet_id}}"
-                      value="{{tweet.tweet_id}}"
+              
+                
+                <div class="d-flx" id="like-button">
+                  <button
+                    type="submit"
+                    class="btn btn-link d-flex align-items-center text-muted mx-4"
+                    name="like_button_{{tweet.tweet_id}}"
+                    value="{{tweet.tweet_id}}"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="feather feather-heart icon-md mb-0"
+                      id="like-button"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="feather feather-heart icon-md mb-0"
-                        id="like-button"
-                      >
-                        <path
-                          d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
-                        ></path>
-                      </svg>
-                      <p class="d-none d-md-block mx-1 my-2">Like</p>
-                    </button>
-                  </div>
+                      <path
+                        d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                      ></path>
+                    </svg>
+                    <p class="d-none d-md-block mx-1 my-2">Like</p>
+                  </button>
+                </div>
 
-                  <div class="d-flx" id="like-button">
-                    <button
-                      type="button"
-                      class="btn btn-link d-flex align-items-center text-muted mx-4"
-                      name="comment_button_{{tweet.tweet_id}}"
-                      data-target="#CommentModal" 
-                      data-toggle="modal"
-                      data-whatever="@getbootstrap"
+                <div class="d-flx" id="like-button">
+                  <button
+                    type="button"
+                    class="btn btn-link d-flex align-items-center text-muted mx-4"
+                    name="comment_button_{{tweet.tweet_id}}"
+                    data-target="#CommentModal{{tweet.tweet_id}}" 
+                    data-toggle="modal"
+                    data-whatever="@getbootstrap"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      class="feather feather-message-square icon-md mb-0"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        class="feather feather-message-square icon-md mb-0"
-                      >
-                        <path
-                          d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
-                        ></path>
-                      </svg>
-                      <p class="d-none d-md-block mx-1 my-2">Comment</p>
-                    </button>
-           
-                    <div class="modal fade" id="CommentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                      <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">New message</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
+                      <path
+                        d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                      ></path>
+                    </svg>
+                    <p class="d-none d-md-block mx-1 my-2">Comment</p>
+                  </button>
+          
+                  <div class="modal fade" id="CommentModal{{tweet.tweet_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                      <div class="modal-content">
+
+
+                        <div class="modal-header">
+                          <!-- <h5 class="modal-title" id="exampleModalLabel">Write your comment</h5> -->
+                          <!-- <button type="button" class="close rounded-circle" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                          </button> -->
+                          <div class="d-flex flex-column overflow-auto" style="height:400px;">
+                            {% for comment in comments%}
+                              {% if comment.tweet_id == tweet.tweet_id %}
+                                <div class="d-flex flex-row my-3" id="comments_{{tweet.tweet_id}}">
+                                  <div class="d-flex flex-row align-items-center">
+                                    <img class="rounded-circle" src="{{comment.user.profile_picture_path.url}}" style="width:50px; height:50px;"/>
+                                    <div class="d-flex flex-column">
+                                      <h6 class="mx-2 p-0 my-0">{{comment.user.name}}</h6>
+                                      <p class="text-muted mx-2 p-0 my-0">{{comment.user.username}}</p>
+                                    </div>
+                                  </div>
+                                  <p>{{comment.content}}</p>
+
+                                </div>
+                                <hr>
+                              {% endif %}
+                            {% endfor %}  
                           </div>
+                        </div>
+
+
+                        <form method="post" id="comment-form-{{tweet.tweet_id}}" action="{% url 'send_comment' %}">
                           <div class="modal-body">
-                            <form>
-                              <div class="form-group">
-                                <label for="recipient-name" class="col-form-label">Recipient:</label>
-                                <input type="text" class="form-control" id="recipient-name">
-                              </div>
-                              <div class="form-group">
-                                <label for="message-text" class="col-form-label">Message:</label>
-                                <textarea class="form-control" id="message-text"></textarea>
-                              </div>
-                            </form>
+                            <div class="form-group">
+                              <label for="message-text" class="col-form-label">Message:</label>
+                              <textarea class="form-control" id="message-text" name="comment"></textarea>
+                              <input type="hidden" name="tweet_id" value="{{tweet.tweet_id}}">
+                            </div>
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Send Comment </button>
+                            <form method="post" action="{% url 'send_comment' %}">
+                              {% csrf_token %}
+                              <button type="submit" class="btn btn-primary">Send Comment </button>
+                            </form>
+                            <input type="hidden" name="user_id" value="{{request.user.id}}">
                           </div>
-                        </div>
+                        </form>
                       </div>
-                    </div>  
+                    </div>
+                  </div>  
 
 
 
@@ -280,7 +295,7 @@
                       <p class="d-none d-md-block mx-1 my-2">Share</p>
                     </button>
                   </div>
-                </form>
+                
 
 
               </div>
@@ -312,27 +327,12 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 
     <!-- Include jQuery (required by Bootstrap) via CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js" integrity="sha384-VHvPCCyXqtD5DqJeNxl2dtTyhF78xXNXdkwX1CZeRusQfRKp+tA7hAShOK/B/fQ2" crossorigin="anonymous"></script> 
 
     <script src="{% static 'js/script.js' %}" ></script>
-
-    <script>
-      function refreshPage() {
-          // Restore the scroll position
-          const storedScrollPosition = localStorage.getItem('scrollPosition');
-  
-          if (storedScrollPosition !== null) {
-              window.scrollTo(0, parseInt(storedScrollPosition, 10));
-              localStorage.removeItem('scrollPosition');
-          }
-  
-          // Initiate the page refresh
-          window.location = window.location;
-      }
-  </script>
-
 
   </body>
 </html>

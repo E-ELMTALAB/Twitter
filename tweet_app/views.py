@@ -2,12 +2,14 @@ from django.shortcuts import render , redirect
 from .models import Tweet
 from .forms import LoginForm
 from django.contrib.auth import login, authenticate
-from .models import User , Followers , Tweet
+from .models import User , Followers , Tweet , Comment
 from django.views.decorators.http import require_POST
+from django.http import JsonResponse
 
 # Create your views here.
 def home(request):
     tweets = Tweet.objects.select_related("user").all()
+    comments = Comment.objects.select_related("user").all()
     for tweet in tweets:
         print("\n")
         print(tweet.user.profile_picture_path.url)
@@ -15,7 +17,8 @@ def home(request):
     # object = Tweet.objects.get(user_id=1)
     # print(tweets)
     context = {
-        "tweets" : tweets
+        "tweets" : tweets ,
+        "comments" : comments
     }
     return render(request , "tweet_app/home.html" , context=context)
 
@@ -66,19 +69,6 @@ def login_view(request):
         form = LoginForm()
     return render(request, 'tweet_app/login_page.html', {'form': form})
 
-@require_POST
-def buttons_clicked(request , pk):
-    print(" a button is clicked")
-    if request.method == 'POST':
-        for key, value in request.POST.items():
-            print(f'Key: {key}, Value: {value}')
-
-    tweets = Tweet.objects.select_related("user").all()
-    context = {
-        "tweets" : tweets
-    }
-    return render(request , "tweet_app/home.html" , context=context)
-    
 def profile_view(request):
     date_joined = request.user.date_joined.strftime("%Y %B")
     followers_count = Followers.objects.filter(follower=request.user.id).count()
@@ -92,3 +82,35 @@ def profile_view(request):
                 "tweets" : tweets }
 
     return render(request , "tweet_app/profile_page.html" , context)
+
+@require_POST
+def buttons_clicked(request , pk):
+    print(" a button is clicked")
+    if request.method == 'POST':
+        for key, value in request.POST.items():
+            print(f'Key: {key}, Value: {value}')
+
+    tweets = Tweet.objects.select_related("user").all()
+    context = {
+        "tweets" : tweets
+    }
+    return render(request , "tweet_app/home.html" , context=context)
+    
+@require_POST
+def send_comment(request):
+    print(" a comment is sent")
+    if request.method == 'POST':
+        comment = request.POST.get('comment')
+        tweet_id = request.POST.get('tweet_id')
+        user_id = request.POST.get('user_id')
+        print("the comment is :" , comment)
+        print("the id of the tweet is :",tweet_id)
+        print("the user id of the tweet is :" , user_id)
+        comment = Comment(user_id=user_id , tweet_id=tweet_id , content=comment)
+        comment.save()
+
+    # tweets = Tweet.objects.select_related("user").all()
+    # context = {
+    #     "tweets" : tweets
+    # }
+    return JsonResponse({"message":"the comment was received successfully"})
