@@ -2,7 +2,7 @@ from django.shortcuts import render , redirect
 from .models import Tweet
 from .forms import LoginForm
 from django.contrib.auth import login, authenticate
-from .models import User
+from .models import User , Followers , Tweet
 from django.views.decorators.http import require_POST
 
 # Create your views here.
@@ -20,7 +20,7 @@ def home(request):
     return render(request , "tweet_app/home.html" , context=context)
 
 def test(request):
-    return render(request , "tweet_app\social_network_user_profile_example.html")
+    return render(request , r"tweet_app\test.html")
 
 # def login_view(request):
 #     # Process the form and authentication logic
@@ -80,4 +80,15 @@ def buttons_clicked(request , pk):
     return render(request , "tweet_app/home.html" , context=context)
     
 def profile_view(request):
-    return render(request , "tweet_app/profile_page.html" , {"request" : request})
+    date_joined = request.user.date_joined.strftime("%Y %B")
+    followers_count = Followers.objects.filter(follower=request.user.id).count()
+    following_count = Followers.objects.filter(following=request.user.id).count()
+    tweets = Tweet.objects.filter(user_id=request.user.id)
+
+    context = {"request" : request ,
+                "date_joined" : date_joined ,
+                "followers_count" : followers_count,
+                "following_count" : following_count ,
+                "tweets" : tweets }
+
+    return render(request , "tweet_app/profile_page.html" , context)

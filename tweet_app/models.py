@@ -36,6 +36,7 @@ from django.utils import timezone
     
 class User(AbstractUser):
     username = models.CharField(max_length=50, unique=True)
+    name = models.CharField(max_length=50 , unique=False)
     password = models.CharField(max_length=100 , unique=True)
     email = models.EmailField(unique=True)    
     id = models.AutoField(primary_key=True)
