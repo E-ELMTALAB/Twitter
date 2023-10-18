@@ -97,12 +97,43 @@
 //     });
 // });
 
+// $(document).ready(function() {
+//     $('form').submit(function(e) {
+//         e.preventDefault(); // Prevent the form from submitting traditionally
+        
+//         var form = $(this);
+//         var formData = form.serialize();
+//         console.log("the comment javascript funciton man ")
+        
+//         $.ajax({
+//             type: 'POST',
+//             url: form.attr('action'),
+//             data: formData,
+//             success: function(response) {
+//                 if (response.message) {
+//                     alert(response.message);
+//                     // Close the modal or handle success as needed
+//                 } else if (response.error) {
+//                     alert(response.error);
+//                     // Handle error as needed
+//                 }
+//             },
+//             error: function(xhr, status, error) {
+//                 console.error('Error: ' + error);
+//                 // Handle AJAX errors as needed
+//             }
+//         });
+//     });
+// });
+
 $(document).ready(function() {
-    $('form').submit(function(e) {
+    $('form[id^="comment-form"]').submit(function(e) {
         e.preventDefault(); // Prevent the form from submitting traditionally
         
         var form = $(this);
         var formData = form.serialize();
+        
+        console.log("the comment JavaScript function man");
         
         $.ajax({
             type: 'POST',
@@ -122,5 +153,36 @@ $(document).ready(function() {
                 // Handle AJAX errors as needed
             }
         });
+    });
+});
+
+
+
+document.querySelectorAll("button[name='like-button']").forEach(function (button) {
+    button.addEventListener("click", function (event) {
+        event.preventDefault();
+
+        var postId = button.getAttribute("data-post-id");
+        var heartIcon = button.querySelector("svg");
+        
+
+        var form = $(this).closest('form');
+        // var form = $(this);
+        var formData = form.serialize();
+
+        
+        $.ajax({
+            type: 'POST',
+            url: form.attr('action'),
+            data: formData,
+            dataType: "json"
+        });
+        
+        // For example, you can toggle the fill color between red and none:
+        if (heartIcon.getAttribute("fill") === "red") {
+            heartIcon.setAttribute("fill", "none");
+        } else {
+            heartIcon.setAttribute("fill", "red");
+        }
     });
 });

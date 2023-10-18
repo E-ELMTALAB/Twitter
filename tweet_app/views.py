@@ -2,23 +2,23 @@ from django.shortcuts import render , redirect
 from .models import Tweet
 from .forms import LoginForm
 from django.contrib.auth import login, authenticate
-from .models import User , Followers , Tweet , Comment
+from .models import User , Followers , Tweet , Comment , Like
 from django.views.decorators.http import require_POST
-from django.http import JsonResponse
+from django.http import JsonResponse , HttpResponse
 
 # Create your views here.
 def home(request):
     tweets = Tweet.objects.select_related("user").all()
     comments = Comment.objects.select_related("user").all()
-    for tweet in tweets:
-        print("\n")
-        print(tweet.user.profile_picture_path.url)
-        print("\n")
-    # object = Tweet.objects.get(user_id=1)
-    # print(tweets)
+    liked_tweets = Like.objects.filter(user_id=request.user.id)
+    liked_tweets = [tweets.tweet_id for tweets in liked_tweets]
+
+    print("the liked numbers :" , str(liked_tweets))
+
     context = {
         "tweets" : tweets ,
-        "comments" : comments
+        "comments" : comments , 
+        "liked_tweets" : liked_tweets
     }
     return render(request , "tweet_app/home.html" , context=context)
 
@@ -84,17 +84,25 @@ def profile_view(request):
     return render(request , "tweet_app/profile_page.html" , context)
 
 @require_POST
-def buttons_clicked(request , pk):
-    print(" a button is clicked")
+def like_post(request):
+    print(" like button is clicked")
     if request.method == 'POST':
-        for key, value in request.POST.items():
-            print(f'Key: {key}, Value: {value}')
+        user_id = request.POST.get("user_id")
+        tweet_id = request.POST.get("tweet_id")
+        print("the user id is :" , user_id)
+        print("the tweet id is :" , tweet_id)
 
-    tweets = Tweet.objects.select_related("user").all()
-    context = {
-        "tweets" : tweets
-    }
-    return render(request , "tweet_app/home.html" , context=context)
+        likes = Like.objects.filter(user_id=user_id , tweet_id=tweet_id)
+        if likes.exists() :
+            print("about to delete the like")
+            print(likes)
+            likes.delete()
+        else:
+            print("going to make the like")
+            like = Like(user_id=user_id , tweet_id=tweet_id)
+            like.save()
+
+    return HttpResponse(status=204)
     
 @require_POST
 def send_comment(request):
