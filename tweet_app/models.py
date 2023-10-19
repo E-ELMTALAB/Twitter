@@ -167,3 +167,4 @@ class MediaFile(models.Model):
 
 admin.site.register(User)
 admin.site.register(Tweet)
+admin.site.register(PersonRecommendation)

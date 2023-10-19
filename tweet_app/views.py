@@ -2,7 +2,7 @@ from django.shortcuts import render , redirect
 from .models import Tweet
 from .forms import LoginForm
 from django.contrib.auth import login, authenticate
-from .models import User , Followers , Tweet , Comment , Like
+from .models import User , Followers , Tweet , Comment , Like , PersonRecommendation
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse , HttpResponse
 from .forms import TweetForm
@@ -11,15 +11,25 @@ from .forms import TweetForm
 def home(request):
     tweets = Tweet.objects.select_related("user").all()
     comments = Comment.objects.select_related("user").all()
+    recommendations = PersonRecommendation.objects.filter(to_user_id = request.user.id).select_related("from_user").all()
+    recommendations = [user.from_user_id for user in recommendations]
+    recoms = []
+    for recom in recommendations:
+        user = User.objects.get(id = recom)
+        recoms.append(user)
+
     liked_tweets = Like.objects.filter(user_id=request.user.id)
     liked_tweets = [tweets.tweet_id for tweets in liked_tweets]
 
     print("the liked numbers :" , str(liked_tweets))
+    print("the recommendations : " , str(recoms))
+    # print("the username is :", recoms[0])
 
     context = {
         "tweets" : tweets ,
         "comments" : comments , 
-        "liked_tweets" : liked_tweets
+        "liked_tweets" : liked_tweets , 
+        "recoms" : recoms
     }
     return render(request , "tweet_app/home.html" , context=context)
 
@@ -141,6 +151,4 @@ def send_tweet(request):
             print("the forms is valid ")
             form.save()
             # return HttpResponse("the tweet information receieved successfuly")
-
-
-    return home(request)
+            return redirect("home_page")
