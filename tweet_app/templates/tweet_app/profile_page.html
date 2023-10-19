@@ -38,7 +38,9 @@
             <div class="d-flex flex-row">
               <p>{{tweet.text}}</p>
             </div>
-            <img src="{{tweet.image.url}}" style="width:100%;"/>
+            {% if tweet.image %}
+              <img src="{{tweet.image.url}}" style="width:100%;"/>
+            {% endif %}
           </div>
           <div class="card-footer">
             <div class="d-flex post-actions">

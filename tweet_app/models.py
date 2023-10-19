@@ -161,6 +161,9 @@ class Trend(models.Model):
     def __str__(self):
         return self.name
     
+class MediaFile(models.Model):
+    file = models.FileField(upload_to='uploads/')
+    
 
 admin.site.register(User)
 admin.site.register(Tweet)

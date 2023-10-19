@@ -156,6 +156,36 @@ $(document).ready(function() {
     });
 });
 
+// $(document).ready(function() {
+//     $('form[id^="tweet-form"]').submit(function(e) {
+//         e.preventDefault(); // Prevent the form from submitting traditionally
+        
+//         var form = $(this);
+//         var formData = form.serialize();
+        
+//         console.log("the tweet ");
+        
+//         $.ajax({
+//             type: 'POST',
+//             url: form.attr('action'),
+//             data: formData,
+//             success: function(response) {
+//                 if (response.message) {
+//                     alert(response.message);
+//                     // Close the modal or handle success as needed
+//                 } else if (response.error) {
+//                     alert(response.error);
+//                     // Handle error as needed
+//                 }
+//             },
+//             error: function(xhr, status, error) {
+//                 console.error('Error: ' + error);
+//                 // Handle AJAX errors as needed
+//             }
+//         });
+//     });
+// });
+
 
 
 document.querySelectorAll("button[name='like-button']").forEach(function (button) {
@@ -186,3 +216,58 @@ document.querySelectorAll("button[name='like-button']").forEach(function (button
         }
     });
 });
+
+
+// $(document).ready(function () {
+//     $("#file-input").change(function () {
+//         var input = this;
+//         var imagePreview = $("#image-preview")[0];
+
+//         if (input.files && input.files[0] && input.files[0].type.startsWith("image/")) {
+//             var file = input.files[0];
+//             var reader = new FileReader();
+
+//             reader.onload = function (e) {
+//                 var preview = document.createElement("img");
+//                 preview.src = e.target.result;
+//                 imagePreview.innerHTML = "";
+//                 imagePreview.appendChild(preview);
+//             };
+
+//             reader.readAsDataURL(file);
+//         } else {
+//             // Clear the preview if a non-image file is selected
+//             imagePreview.innerHTML = "";
+//         }
+//     });
+
+//     $("#submit-button").click(function () {
+//         var form = $("#custom-form")[0];
+//         var formData = new FormData(form);
+
+//         $.ajax({
+//             type: "POST",
+//             url: "/tweet_app/upload/",
+//             data: formData,
+//             processData: false,
+//             contentType: false,
+//             success: function (data) {
+//                 // Handle success response from the server
+//             },
+//             error: function (xhr, status, error) {
+//                 // Handle errors
+//             }
+//         });
+//     });
+// });
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Get a reference to the button that should hide the modal
+    var hideModalButton = document.getElementById('hideModalButton');
+    
+    // Add a click event listener to the button
+    hideModalButton.addEventListener('click', function() {
+      // Use Bootstrap's modal('hide') method to hide the modal
+      $('#exampleModal').modal('hide');
+    });
+  });

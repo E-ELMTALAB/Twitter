@@ -5,6 +5,7 @@ from django.contrib.auth import login, authenticate
 from .models import User , Followers , Tweet , Comment , Like
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse , HttpResponse
+from .forms import TweetForm
 
 # Create your views here.
 def home(request):
@@ -122,3 +123,24 @@ def send_comment(request):
     #     "tweets" : tweets
     # }
     return JsonResponse({"message":"the comment was received successfully"})
+
+@require_POST
+def send_tweet(request):
+    if request.method == 'POST':
+        print("a tweet has been sent")
+        user_id = request.POST.get("user")
+        file = request.POST.get("image")
+        text = request.POST.get("text")
+        print(request.FILES)
+        print("the user id is :", user_id)
+        print("the file uploaded is :",file)
+        print("the text of the tweet is :",text)
+        form = TweetForm(request.POST, request.FILES)
+        if form.is_valid():
+            # file is saved
+            print("the forms is valid ")
+            form.save()
+            # return HttpResponse("the tweet information receieved successfuly")
+
+
+    return home(request)
