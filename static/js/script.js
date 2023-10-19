@@ -163,6 +163,15 @@ $(document).ready(function() {
         
         var form = $(this);
         var formData = form.serialize();
+        var button = form.find('button[type="submit"]'); // Find the submit button within the form
+        // button.text('Unfollow');
+        // Change the button text to indicate that the request is being processed
+        // Toggle the button text between "Follow" and "Unfollow"
+        if (button.text().trim() == 'Follow') {
+            button.text('Unfollow');
+        } else {
+            button.text('Follow');
+        }
         
         console.log("the follow request sent");
         

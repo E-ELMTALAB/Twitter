@@ -21,6 +21,9 @@ def home(request):
     liked_tweets = Like.objects.filter(user_id=request.user.id)
     liked_tweets = [tweets.tweet_id for tweets in liked_tweets]
 
+    followed = Followers.objects.filter(follower_id=request.user.id)
+    followings = [follow.following_id for follow in followed]
+
     print("the liked numbers :" , str(liked_tweets))
     print("the recommendations : " , str(recoms))
     # print("the username is :", recoms[0])
@@ -29,7 +32,8 @@ def home(request):
         "tweets" : tweets ,
         "comments" : comments , 
         "liked_tweets" : liked_tweets , 
-        "recoms" : recoms
+        "recoms" : recoms ,
+        "followings" : followings
     }
     return render(request , "tweet_app/home.html" , context=context)
 
@@ -159,8 +163,17 @@ def send_follow_request(request):
         print("a tweet has been sent")
         user_id = request.POST.get("user_id")
 
-        follow = Followers(follower_id=request.user.id , following_id=user_id)
-        follow.save()
+        followers = Followers.objects.filter(follower_id=request.user.id , following_id=user_id)
+        if followers.exists() :
+            print("about to delete the follow")
+            print(followers)
+            followers.delete()
+        else:
+            print("going to follow a user")
+            follow = Followers(follower_id=request.user.id , following_id=user_id)
+            follow.save()
+
+
 
         print("the user id is :", user_id)
     

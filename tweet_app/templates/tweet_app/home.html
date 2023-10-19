@@ -359,15 +359,21 @@
                   <div class="d-flex flex-row my-3 justify-content-between">
                     <div class="d-flex flex-row align-items-center justify-content-between">
                       <img class="rounded-circle mx-3" src="{{recom.profile_picture_path.url}}" style="width:50px; height:50px;" alt="defualt"/>
-                      <div class="d-flex flex-column" style="width:140px;">
+                      <div class="d-flex flex-column" style="width:125px;">
                         <h6 class="mx-2 my-0">{{recom.name}}</h6>
                         <p class="text-muted mx-2 my-0">{{recom.username}}</p>
                         <input type="hidden" name="user_id" value="{{recom.id}}">
                       </div>
                       <div class="d-flex">
-                        <button type="submit" class="btn btn-primary">
-                          Follow
-                        </button>
+                        {% if recom.id in followings %}
+                          <button type="submit" id="submit_button" class="btn btn-primary">
+                            Unfollow
+                          </button>
+                        {% else %}
+                          <button type="submit" id="submit_button" class="btn btn-primary">
+                            Follow
+                          </button>
+                        {% endif %}
                       </div>
                     </div>
                   </div>
