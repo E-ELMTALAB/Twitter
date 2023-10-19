@@ -152,3 +152,16 @@ def send_tweet(request):
             form.save()
             # return HttpResponse("the tweet information receieved successfuly")
             return redirect("home_page")
+        
+@require_POST
+def send_follow_request(request):
+    if request.method == 'POST':
+        print("a tweet has been sent")
+        user_id = request.POST.get("user_id")
+
+        follow = Followers(follower_id=request.user.id , following_id=user_id)
+        follow.save()
+
+        print("the user id is :", user_id)
+    
+    return HttpResponse(status=204)

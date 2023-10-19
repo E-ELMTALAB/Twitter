@@ -156,36 +156,36 @@ $(document).ready(function() {
     });
 });
 
-// $(document).ready(function() {
-//     $('form[id^="tweet-form"]').submit(function(e) {
-//         e.preventDefault(); // Prevent the form from submitting traditionally
-        
-//         var form = $(this);
-//         var formData = form.serialize();
-        
-//         console.log("the tweet ");
-        
-//         $.ajax({
-//             type: 'POST',
-//             url: form.attr('action'),
-//             data: formData,
-//             success: function(response) {
-//                 if (response.message) {
-//                     alert(response.message);
-//                     // Close the modal or handle success as needed
-//                 } else if (response.error) {
-//                     alert(response.error);
-//                     // Handle error as needed
-//                 }
-//             },
-//             error: function(xhr, status, error) {
-//                 console.error('Error: ' + error);
-//                 // Handle AJAX errors as needed
-//             }
-//         });
-//     });
-// });
 
+$(document).ready(function() {
+    $('form[id^="follow-request"]').submit(function(e) {
+        e.preventDefault(); // Prevent the form from submitting traditionally
+        
+        var form = $(this);
+        var formData = form.serialize();
+        
+        console.log("the follow request sent");
+        
+        $.ajax({
+            type: 'POST',
+            url: form.attr('action'),
+            data: formData,
+            // success: function(response) {
+            //     if (response.message) {
+            //         alert(response.message);
+            //         // Close the modal or handle success as needed
+            //     } else if (response.error) {
+            //         alert(response.error);
+            //         // Handle error as needed
+            //     }
+            // },
+            // error: function(xhr, status, error) {
+            //     console.error('Error: ' + error);
+            //     // Handle AJAX errors as needed
+            // }
+        });
+    });
+});
 
 
 document.querySelectorAll("button[name='like-button']").forEach(function (button) {

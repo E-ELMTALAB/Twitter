@@ -9,6 +9,7 @@ urlpatterns = [
     path('like_post/', views.like_post, name='like_post'),
     path("profile_page/" , views.profile_view , name="profile_page"),
     path("send_comment/" , views.send_comment , name="send_comment"),
-    path('send_tweet/', views.send_tweet, name='send_tweet')
+    path('send_tweet/', views.send_tweet, name='send_tweet'),
+    path('send_follow_request/', views.send_follow_request, name='send_follow_request')
 ]
 
