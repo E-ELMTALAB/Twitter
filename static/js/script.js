@@ -196,6 +196,41 @@ $(document).ready(function() {
     });
 });
 
+// $(document).ready(function() {
+//     $('form[id^="delete-tweet"]').submit(function(e) {
+//         e.preventDefault(); // Prevent the form from submitting traditionally
+        
+//         var form = $(this);
+//         var formData = form.serialize();
+//         // var button = form.find('button[type="submit"]'); // Find the submit button within the form
+//         // button.text('Unfollow');
+//         // Change the button text to indicate that the request is being processed
+//         // Toggle the button text between "Follow" and "Unfollow"
+
+        
+//         console.log("the tweet delete request sent");
+        
+//         $.ajax({
+//             type: 'POST',
+//             url: form.attr('action'),
+//             data: formData,
+//             // success: function(response) {
+//             //     if (response.message) {
+//             //         alert(response.message);
+//             //         // Close the modal or handle success as needed
+//             //     } else if (response.error) {
+//             //         alert(response.error);
+//             //         // Handle error as needed
+//             //     }
+//             // },
+//             // error: function(xhr, status, error) {
+//             //     console.error('Error: ' + error);
+//             //     // Handle AJAX errors as needed
+//             // }
+//         });
+//     });
+// });
+
 
 document.querySelectorAll("button[name='like-button']").forEach(function (button) {
     button.addEventListener("click", function (event) {

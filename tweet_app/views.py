@@ -186,3 +186,14 @@ def send_follow_request(request):
         print("the user id is :", user_id)
     
     return HttpResponse(status=204)
+
+@require_POST
+def delete_tweet(request):
+    if request.method == 'POST':
+        print("a tweet is going to be deleted")
+        tweet_id = request.POST.get("tweet_id")
+        print("the user id is :", tweet_id)
+        tweet = Tweet.objects.get(tweet_id=tweet_id)
+        tweet.delete()
+    
+        return redirect("profile_page")

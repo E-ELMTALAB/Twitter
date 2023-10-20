@@ -24,13 +24,64 @@
         {% for tweet in tweets reversed%}
         <div class="card rounded shadow">
           <div class="card-header">
-            <div class="d-flex justify-content-start">
+            <div class="d-flex justify-content-start justify-content-between">
               <div class="d-flex align-items-start">
                 <img class="rounded-circle" src="{{tweet.user.profile_picture_path.url}}" style="width:50px; height:50px;"/>
                 <div class="mx-3">
                   <h5 class="m-0">{{tweet.user.username}}</h5>
                   <p class="m-0">{{tweet.timestamp|timesince}}</p>
                 </div>
+              </div>
+              <div class="d-flex align-items-center">
+                
+                  <button type="button" name="delete_tweet" class="btn btn-primary" data-toggle="modal"
+                  data-target="#deleteModal">
+                    Delete
+                  </button>
+
+                  <div
+                  class="modal fade"
+                  id="deleteModal"
+                  tabindex="-1"
+                  role="dialog"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog" role="document">
+                    <form method="post" id="delete-tweet-{{tweet.tweet_id}}" action="{% url 'delete_tweet' %}">
+                      {% csrf_token %}
+                      <div class="modal-content">
+                        
+                        <div class="modal-body">
+                          
+                          <h3>Are you sure you want to delete this tweet?</h3>
+                          <input type="hidden" name="tweet_id" value="{{tweet.tweet_id}}">
+                        </div>
+                        <div class="modal-footer">
+                          <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                          >
+                            Close
+                          </button>
+                          <button type="submit" 
+                          class="btn btn-primary" 
+                          id="delete_tweet" 
+                          data-toggle="modal"
+                          data-target="#deleteModal"
+                          >
+                          Yes
+                          </button>
+                        </div>
+                      </div>
+                    </form>
+  
+                  </div>
+                </div>
+
+
+                
               </div>
             </div>
           </div>
@@ -228,3 +279,10 @@
 
 </div>
 {% endblock %}
+
+<!-- {% block recoms %}
+
+
+
+
+{% endblock %} -->
