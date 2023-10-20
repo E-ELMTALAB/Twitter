@@ -150,7 +150,7 @@
                   <img class="rounded-circle" src="{{tweet.user.profile_picture_path.url}}" style="width:50px; height:50px;"/>
                   <div class="mx-3">
                     <h5 class="m-0">{{tweet.user.username}}</h5>
-                    <p class="m-0">{{tweet.timestamp|timesince}}</p>
+                    <p class="m-0">{{tweet.timestamp|timesince}} ago</p>
                   </div>
                 </div>
               </div>
@@ -298,7 +298,8 @@
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <form method="post" action="{% url 'send_comment' %}">
                               {% csrf_token %}
-                              <button type="submit" class="btn btn-primary">Send Comment </button>
+                              <button type="submit" class="btn btn-primary" data-target="#CommentModal{{tweet.tweet_id}}" 
+                              data-toggle="modal">Send Comment </button>
                             </form>
                             <input type="hidden" name="user_id" value="{{request.user.id}}">
                           </div>
