@@ -89,6 +89,8 @@ def profile_view(request):
     followers_count = Followers.objects.filter(follower=request.user.id).count()
     following_count = Followers.objects.filter(following=request.user.id).count()
     tweets = Tweet.objects.filter(user_id=request.user.id)
+    liked_tweets = Like.objects.filter(user_id=request.user.id)
+    liked_tweets = [tweets.tweet_id for tweets in liked_tweets]
     recommendations = PersonRecommendation.objects.filter(to_user_id = request.user.id).select_related("from_user").all()
     recommendations = [user.from_user_id for user in recommendations]
     recoms = []
@@ -101,7 +103,8 @@ def profile_view(request):
                 "followers_count" : followers_count,
                 "following_count" : following_count ,
                 "tweets" : tweets,
-                "recoms" : recoms  
+                "recoms" : recoms ,
+                "liked_tweets" : liked_tweets  
                 }
 
     return render(request , "tweet_app/profile_page.html" , context)
@@ -192,7 +195,7 @@ def delete_tweet(request):
     if request.method == 'POST':
         print("a tweet is going to be deleted")
         tweet_id = request.POST.get("tweet_id")
-        print("the user id is :", tweet_id)
+        print("the tweet id is :", tweet_id)
         tweet = Tweet.objects.get(tweet_id=tweet_id)
         tweet.delete()
     

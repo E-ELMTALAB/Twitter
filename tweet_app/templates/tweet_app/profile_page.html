@@ -34,14 +34,14 @@
               </div>
               <div class="d-flex align-items-center">
                 
-                  <button type="button" name="delete_tweet" class="btn btn-primary" data-toggle="modal"
-                  data-target="#deleteModal">
+                  <button type="button" name="delete_tweet" id="{{tweet.tweet_id}}" class="btn btn-primary" data-toggle="modal"
+                  data-target="#deleteModal{{tweet.tweet_id}}">
                     Delete
                   </button>
 
                   <div
                   class="modal fade"
-                  id="deleteModal"
+                  id="deleteModal{{tweet.tweet_id}}"
                   tabindex="-1"
                   role="dialog"
                   aria-labelledby="exampleModalLabel"
@@ -55,7 +55,7 @@
                         <div class="modal-body">
                           
                           <h3>Are you sure you want to delete this tweet?</h3>
-                          <input type="hidden" name="tweet_id" value="{{tweet.tweet_id}}">
+                          <input type="hidden" name="tweet_id" id="{{tweet.tweet_id}}" value="{{tweet.tweet_id}}">
                         </div>
                         <div class="modal-footer">
                           <button
@@ -67,7 +67,7 @@
                           </button>
                           <button type="submit" 
                           class="btn btn-primary" 
-                          id="delete_tweet" 
+                          id="delete_tweet-{{tweet.tweet_id}}" 
                           data-toggle="modal"
                           data-target="#deleteModal"
                           >
