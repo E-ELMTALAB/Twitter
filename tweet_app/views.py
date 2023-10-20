@@ -89,12 +89,20 @@ def profile_view(request):
     followers_count = Followers.objects.filter(follower=request.user.id).count()
     following_count = Followers.objects.filter(following=request.user.id).count()
     tweets = Tweet.objects.filter(user_id=request.user.id)
+    recommendations = PersonRecommendation.objects.filter(to_user_id = request.user.id).select_related("from_user").all()
+    recommendations = [user.from_user_id for user in recommendations]
+    recoms = []
+    for recom in recommendations:
+        user = User.objects.get(id = recom)
+        recoms.append(user)
 
     context = {"request" : request ,
                 "date_joined" : date_joined ,
                 "followers_count" : followers_count,
                 "following_count" : following_count ,
-                "tweets" : tweets }
+                "tweets" : tweets,
+                "recoms" : recoms  
+                }
 
     return render(request , "tweet_app/profile_page.html" , context)
 
