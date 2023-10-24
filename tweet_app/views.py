@@ -6,9 +6,19 @@ from .models import User , Followers , Tweet , Comment , Like , PersonRecommenda
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse , HttpResponse
 from .forms import TweetForm
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
+@csrf_exempt
 def home(request):
+
+    user_agent = request.META.get('HTTP_USER_AGENT', '').lower()
+    is_mobile = 'mobile' in user_agent or 'android' in user_agent
+    if is_mobile:
+        print("the user is sending request with a mobile phone")
+    else:
+        print("the user is sending requeset with a computer ")
+
     tweets = Tweet.objects.select_related("user").all()
     comments = Comment.objects.select_related("user").all()
     recommendations = PersonRecommendation.objects.filter(to_user_id = request.user.id).select_related("from_user").all()
@@ -57,7 +67,7 @@ def test(request):
 #     }
     
 #     return render(request, 'login.html', context)
-
+@csrf_exempt
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
