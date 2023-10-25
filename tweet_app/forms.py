@@ -1,5 +1,6 @@
 from django import forms
 from tweet_app.models import User , Tweet
+from django.contrib.auth.forms import UserCreationForm
 from .models import MediaFile
 
 class LoginForm(forms.Form):
@@ -10,6 +11,12 @@ class LoginForm(forms.Form):
     class Meta():
         model = User
         fields = ("email" , "password")
+
+class UserRegistrationForm(forms.ModelForm):
+
+    class Meta():
+        model = User
+        fields = ("email" , "password" , "username" , "name" , "date_of_birth")
 
 
 class MediaFileForm(forms.ModelForm):

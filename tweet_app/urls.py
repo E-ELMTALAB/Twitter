@@ -7,6 +7,7 @@ urlpatterns = [
     # path("" , lambda request: HttpResponseRedirect('login_page/') , name="first_page"),
     path('home/', views.home , name="home_page"),
     path("login_page/" , views.login_view , name="login_page"),
+    path("signup_page/" , views.signup_view , name="signup_page"),
     path('like_post/', views.like_post, name='like_post'),
     path("profile_page/" , views.profile_view , name="profile_page"),
     path("send_comment/" , views.send_comment , name="send_comment"),

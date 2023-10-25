@@ -2,10 +2,10 @@ from django.shortcuts import render , redirect
 from .models import Tweet
 from .forms import LoginForm
 from django.contrib.auth import login, authenticate
-from .models import User , Followers , Tweet , Comment , Like , PersonRecommendation
+from .models import User , Followers , Tweet , Comment , Like , PersonRecommendation 
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse , HttpResponse
-from .forms import TweetForm
+from .forms import TweetForm , UserRegistrationForm
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
@@ -68,6 +68,32 @@ def test(request):
     
 #     return render(request, 'login.html', context)
 @csrf_exempt
+def signup_view(request):
+    if request.method == 'POST':
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            # user = form.save()
+            email = form.cleaned_data.get("email")
+            password = form.cleaned_data.get('password')
+            print("\n")
+            print("the password is :", password)
+            print("the email is : ",email)
+            # user = authenticate(request, email=email, password=password)
+            form.save()
+
+            return redirect("home_page")
+        else:
+            print("the form is not valid")
+            for field, errors in form.errors.items():
+                print(f"Field: {field}")
+                for error in errors:
+                    print(f"Error: {error}")
+    else:
+        form = UserRegistrationForm()
+    return render(request, 'tweet_app/signup_page.html')
+
+
+@csrf_exempt
 def login_view(request):
     if request.method == 'POST':
         form = LoginForm(request.POST)
@@ -92,7 +118,7 @@ def login_view(request):
                 print("user is not authenticated")
     else:
         form = LoginForm()
-    return render(request, 'tweet_app/login_page.html', {'form': form})
+    return render(request, 'tweet_app/login_page.html')
 
 def profile_view(request):
     date_joined = request.user.date_joined.strftime("%Y %B")

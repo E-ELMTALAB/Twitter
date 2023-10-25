@@ -73,7 +73,11 @@
 
             
             <div class="d-flex align-items-start mt-5 mb-4" style="z-index: 3;">
-              <img class="rounded-circle mx-3" src="{{request.user.profile_picture_path.url}}" style="width:100px; height:100px;"/>
+              {% if request.user.profile_picture_path %}
+                <img class="rounded-circle mx-3" src="{{request.user.profile_picture_path.url}}" style="width:100px; height:100px;"/>
+              {% else %}
+                <img class="rounded-circle mx-3" src="https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png" style="width:100px; height:100px;" />
+              {% endif %}
               <!-- <div class="mx-3">
                 <h5 class="mt-3">{{request.user.username}}</h5>
                 <p class="m-0">{{request.user.email}}</p>
@@ -114,7 +118,13 @@
 
 
             <div class="d-flex align-items-start mt-5 mb-4">
+              
+            {% if request.user.profile_picture_path %}
               <img class="rounded-circle mx-3" src="{{request.user.profile_picture_path.url}}" style="width:85px; height:85px;"/>
+            {% else %}
+              <img class="rounded-circle mx-3" src="https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png" style="width:85px; height:85px;"/>
+            {% endif %}
+
               <div class="mx-3">
                 <h5 class="mt-3">{{request.user.username}}</h5>
                 <p class="m-0">{{request.user.email}}</p>
@@ -221,7 +231,13 @@
             <div class="card-header">
               <div class="d-flex justify-content-start">
                 <div class="d-flex align-items-start">
-                  <img class="rounded-circle" src="{{tweet.user.profile_picture_path.url}}" style="width:50px; height:50px;"/>
+
+                  {% if request.user.profile_picture_path %}
+                    <img class="rounded-circle mx-3" src="{{request.user.profile_picture_path.url}}" style="width:60px; height:60px;"/>
+                  {% else %}
+                    <img class="rounded-circle mx-3" src="https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png" style="width:60px; height:60px;"/>
+                  {% endif %}
+
                   <div class="mx-3">
                     <h5 class="m-0">{{tweet.user.username}}</h5>
                     <p class="m-0">{{tweet.timestamp|timesince}} ago</p>
@@ -344,7 +360,13 @@
                               {% if comment.tweet_id == tweet.tweet_id %}
                                 <div class="d-flex flex-row my-3" id="comments_{{tweet.tweet_id}}">
                                   <div class="d-flex flex-row align-items-center">
-                                    <img class="rounded-circle" src="{{comment.user.profile_picture_path.url}}" style="width:50px; height:50px;"/>
+
+                                    {% if request.user.profile_picture_path %}
+                                      <img class="rounded-circle mx-3" src="{{request.user.profile_picture_path.url}}" style="width:70px; height:70px;"/>
+                                    {% else %}
+                                      <img class="rounded-circle mx-3" src="https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png" style="width:70px; height:70px;" />
+                                    {% endif %}
+
                                     <div class="d-flex flex-column">
                                       <h6 class="mx-2 p-0 my-0">{{comment.user.name}}</h6>
                                       <p class="text-muted mx-2 p-0 my-0">{{comment.user.username}}</p>
@@ -426,7 +448,7 @@
         {% endblock%}
 
         
-        <div class="card d-none d-md-block rounded shadow" style="height:705px; width:310px;">
+        <div class="card d-none d-md-block rounded shadow" style="height:705px; width:325px;">
           <div class="d-flex d-none d-md-block flex-column ">
 
             <div class="d-flex flex-column ">
@@ -435,7 +457,13 @@
                   {% csrf_token %}
                   <div class="d-flex flex-row my-3 justify-content-between">
                     <div class="d-flex flex-row align-items-center justify-content-between">
-                      <img class="rounded-circle mx-3" src="{{recom.profile_picture_path.url}}" style="width:50px; height:50px;" alt="defualt"/>
+
+                      {% if request.user.profile_picture_path %}
+                        <img class="rounded-circle mx-3" src="{{recom.profile_picture_path.url}}" style="width:70px; height:70px;"/>
+                      {% else %}
+                        <img class="rounded-circle mx-3" src="https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png" style="width:70px; height:70px;" />
+                      {% endif %}
+
                       <div class="d-flex flex-column" style="width:125px;">
                         <h6 class="mx-2 my-0">{{recom.name}}</h6>
                         <p class="text-muted mx-2 my-0">{{recom.username}}</p>
