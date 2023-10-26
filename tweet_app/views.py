@@ -5,7 +5,7 @@ from django.contrib.auth import login, authenticate
 from .models import User , Followers , Tweet , Comment , Like , PersonRecommendation 
 from django.views.decorators.http import require_POST
 from django.http import JsonResponse , HttpResponse
-from .forms import TweetForm , UserRegistrationForm
+from .forms import TweetForm , UserRegistrationForm , ProfileForm
 from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
@@ -237,14 +237,59 @@ def delete_tweet(request):
     
         return redirect("profile_page")
     
+# @require_POST
+# def edit_profile(request):
+
+#     if request.method == 'POST':
+#         print("the user profile is going to be edited")
+#         user_id = request.POST.get("user")
+#         new_username = request.POST.get("username")
+#         new_name = request.POST.get("name")
+#         new_profile_picture = request.FILES
+#         print("the user id is :", user_id)
+#         print("the new username is :", new_username)
+#         print("the new name is :", new_name)
+#         print("the new profile picture is :", new_profile_picture)
+
+#         user = User.objects.get(id=user_id )
+#         user.username = new_username
+#         user.name = new_name
+#         user.profile_picture_path = new_profile_picture
+#         user.save()
+
+#         return redirect("profile_page")
+    
+
 @require_POST
 def edit_profile(request):
-
     if request.method == 'POST':
-        print("the user profile is going to be edited")
-        user_id = request.POST.get("user_id")
-        print("the user id is :", user_id)
-        # tweet = Tweet.objects.get(tweet_id=tweet_id)
-        # tweet.delete()
-    
-        # return redirect("profile_page")
+        user_id = request.POST.get("id")
+        user = User.objects.get(id=user_id)
+        form = ProfileForm(request.POST, request.FILES , instance=user)
+        print("the profile is about to change ")
+        if form.is_valid():
+            print("i confirm the form validatoin")
+            user_id = form.cleaned_data.get("id")
+            new_username = form.cleaned_data.get("username")
+            new_name = form.cleaned_data.get("name")
+            new_profile_picture = form.cleaned_data.get("profile_picture")
+
+            # user = User.objects.get(id=user_id)
+            user.username = new_username
+            user.name = new_name
+
+            if new_profile_picture:
+                user.profile_picture_path = new_profile_picture.name
+
+
+            user.save()
+            return redirect("profile_page")
+        else:
+            # Form is not valid, access and handle errors
+            errors = form.errors  # This is a dictionary of errors
+
+            # For example, you can log the errors
+            for field, error_list in errors.items():
+                for error in error_list:
+                    # Log or handle the error as needed
+                    print(f"Error in {field}: {error}")

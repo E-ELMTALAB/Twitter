@@ -33,3 +33,8 @@ class TweetForm(forms.ModelForm):
         model = Tweet
         fields = ['user', 'text', 'image' ]
         exclude = ['tweet_id', 'text_label', 'image_label', 'video_label', 'timestamp', 'likes_count', 'retweets_count', 'comments_count', 'is_retweet' , 'video']
+
+class ProfileForm(forms.ModelForm):
+    class Meta():
+        model = User
+        fields = ['id' , 'username' , 'name' , 'profile_picture_path']

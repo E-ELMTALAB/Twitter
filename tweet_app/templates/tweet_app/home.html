@@ -233,7 +233,7 @@
                 <div class="d-flex align-items-start">
 
                   {% if request.user.profile_picture_path %}
-                    <img class="rounded-circle mx-3" src="{{request.user.profile_picture_path.url}}" style="width:60px; height:60px;"/>
+                    <img class="rounded-circle mx-3" src="{{tweet.user.profile_picture_path.url}}" style="width:60px; height:60px;"/>
                   {% else %}
                     <img class="rounded-circle mx-3" src="https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png" style="width:60px; height:60px;"/>
                   {% endif %}
