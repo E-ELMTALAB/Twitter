@@ -2,17 +2,88 @@
 <html>
   <head>
     <!-- Include the Bootstrap CSS -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
     />
   </head>
   <body>
-    <div class="container" style="height: 750px">
-      <div class="d-flex flex-column h-100 justify-content-center align-items-center">
-        <div class="col-md-6 pb-0">
-          <div class="card">
-            <div class="card-header">Login</div>
+    <div class="container">
+      <div class="d-flex flex-column justify-content-center align-items-center">
+        <div class="d-flex flex-column pb-0">
+        
+            <div class="card d-none d-md-block mt-5" style="width:40vw;">
+                <div class="card-header">Login</div>
+                <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="username">username</label>
+                        <input
+                        type="text"
+                        class="form-control"
+                        name="username"
+                        placeholder="Enter your username"
+                        required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input
+                        type="text"
+                        class="form-control"
+                        name="name"
+                        placeholder="Enter your name"
+                        required
+                        />
+                    </div>
+                    <div class="form-group">
+                        <label for="date-of-birth">date-of-birth</label>
+                        <input
+                        type="date"
+                        class="form-control"
+                        name="date_of_birth"
+                        placeholder="Enter your date of birth"
+                        required
+                        />
+                    </div>
+                    <div class="form-group">
+                    <label for="email">Email</label>
+                    <input
+                        type="text"
+                        class="form-control"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    />
+                    </div>
+                    <div class="form-group">
+                    <label for="password">Password</label>
+                    <input
+                        type="password"
+                        class="form-control"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                    />
+
+                    
+
+                    </div>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                </form>
+                </div>
+            </div>
+            <div class="d-flex d-row mx-4 my-3 ">
+                <p class="d-none d-md-block">already have an account ?</p>
+                <a class="d-none d-md-block" href="{% url 'login_page' %}">Login</a>
+            </div>
+
+
+          <div class="card d-md-none mt-5">
+            <div class="card-header">the second login</div>
             <div class="card-body">
               <form method="post">
                 {% csrf_token %}
@@ -70,10 +141,12 @@
               </form>
             </div>
           </div>
-          <div class="d-flex d-row mx-4 my-3">
-            <p>already have an account ?</p>
-            <a href="{% url 'login_page' %}">Login</a>
+          <div class="d-flex d-row mx-4 my-3 ">
+            <p class="d-md-none">already have an account ?</p>
+            <a class="d-md-none" href="{% url 'login_page' %}">Login</a>
           </div>
+
+
         </div>
 
       </div>
