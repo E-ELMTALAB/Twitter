@@ -236,3 +236,15 @@ def delete_tweet(request):
         tweet.delete()
     
         return redirect("profile_page")
+    
+@require_POST
+def edit_profile(request):
+
+    if request.method == 'POST':
+        print("the user profile is going to be edited")
+        user_id = request.POST.get("user_id")
+        print("the user id is :", user_id)
+        # tweet = Tweet.objects.get(tweet_id=tweet_id)
+        # tweet.delete()
+    
+        # return redirect("profile_page")
