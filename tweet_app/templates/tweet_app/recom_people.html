@@ -1,0 +1,46 @@
+{% extends 'tweet_app/home.html' %} {% block content %}
+    <div class="container">
+                
+        <div class="card rounded shadow" style="height:90%; width:90%;">
+            <div class="d-flex flex-column ">
+
+            <div class="d-flex flex-column ">
+                {% for recom in recoms %}
+                <form method="post" id="follow-request-{{recom.id}}"  action="{% url 'send_follow_request' %}">
+                    {% csrf_token %}
+                    <div class="d-flex flex-row my-3 justify-content-between">
+                    <div class="d-flex flex-row align-items-center justify-content-between">
+
+                        {% if request.user.profile_picture_path %}
+                        <img class="rounded-circle mx-3" src="{{recom.profile_picture_path.url}}" style="width:70px; height:70px;"/>
+                        {% else %}
+                        <img class="rounded-circle mx-3" src="https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png" style="width:70px; height:70px;" />
+                        {% endif %}
+
+                        <div class="d-flex flex-column" style="width:125px;">
+                        <h6 class="mx-2 my-0">{{recom.name}}</h6>
+                        <p class="text-muted mx-2 my-0">{{recom.username}}</p>
+                        <input type="hidden" name="user_id" value="{{recom.id}}">
+                        </div>
+                        <div class="d-flex">
+                        {% if recom.id in followings %}
+                            <button type="submit" id="submit_button" class="btn btn-primary">
+                            Unfollow
+                            </button>
+                        {% else %}
+                            <button type="submit" id="submit_button" class="btn btn-primary">
+                            Follow
+                            </button>
+                        {% endif %}
+                        </div>
+                    </div>
+                    </div>
+                </form>
+                <hr>
+                {% endfor %}  
+            </div>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}

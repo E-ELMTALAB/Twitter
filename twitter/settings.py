@@ -143,7 +143,7 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
 
-ALLOWED_HOSTS = ['5a29-94-184-117-110.ngrok-free.app' , 'localhost' , '.ngrok.io' , '.ngrok-free.app' , '172.20.171.44' , '192.168.1.102']
+ALLOWED_HOSTS = ['5a29-94-184-117-110.ngrok-free.app' , 'localhost' , '.ngrok.io' , '.ngrok-free.app' , '172.20.171.44' , '192.168.1.102' , '127.0.0.1' , '172.20.171.37']
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

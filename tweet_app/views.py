@@ -145,6 +145,24 @@ def profile_view(request):
 
     return render(request , "tweet_app/profile_page.html" , context)
 
+def recom_people(request):
+
+    recommendations = PersonRecommendation.objects.filter(to_user_id = request.user.id).select_related("from_user").all()
+    recommendations = [user.from_user_id for user in recommendations]
+    recoms = []
+    for recom in recommendations:
+        user = User.objects.get(id = recom)
+        recoms.append(user)
+    followed = Followers.objects.filter(follower_id=request.user.id)
+    followings = [follow.following_id for follow in followed]
+
+    context = {
+        "recoms" : recoms ,
+        "followings" : followings
+    }
+
+    return render(request , "tweet_app/recom_people.html" , context=context)
+
 @require_POST
 def like_post(request):
     print(" like button is clicked")
