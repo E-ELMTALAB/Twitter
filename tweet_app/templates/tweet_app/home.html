@@ -56,6 +56,34 @@
       }
     }
 
+    .active {
+    background-color: #000; /* Black background color */
+    color: #fff; /* White text color */
+    border-radius: 10px; /* Rounded background */
+    padding: 1px 9px; /* Adjust padding as needed */
+    text-decoration: none; /* Remove underline */
+  }
+
+  /* Style the button container */
+  .button-container {
+    position: fixed;
+    bottom: 5%; /* Adjust the distance from the bottom as needed */
+    left: 75%; /* Adjust the distance from the left as needed */
+    z-index: 9999; /* Ensure it's above other elements (higher z-index) */
+  }
+
+  /* Style the rounded button */
+  .rounded-button {
+    background-color: #0073e6; /* Background color of the button */
+    color: #fff; /* Text color */
+    border: none;
+    border-radius: 50%; /* Makes it rounded */
+    padding: 10px 20px; /* Adjust padding as needed */
+    cursor: pointer;
+    outline: none; /* Remove the default button outline */
+    /* Add any other styling you want */
+  }
+
       /* .scroll {
         height:450px;
         overflow-y: scroll;
@@ -86,19 +114,19 @@
 
             <div class="d-flex flex-column mx-4 my-3 " style="z-index: 3;">
               <h4>
-                <a href="{% url 'home_page' %}" class=" text-decoration-none"  style="color:white;">Home</a>
+                <a href="{% url 'home_page' %}" class="text-decoration-none {% if request.path == '/tweet_app/home/' %}active text-white{% endif %}"  style="color:white;">Home</a>
               </h4>
               <h4>
-                <a href="{% url 'home_page' %}" class=" text-decoration-none"  style="color:white;">trends</a>
+                <a href="{% url 'home_page' %}" class="text-decoration-none {% if request.path == '/tweet_app/tends/' %}active text-white{% endif %}"  style="color:white;">trends</a>
               </h4>
               <h4>
-                <a href="{% url 'home_page' %}" class=" text-decoration-none" style="color:white;">explore</a>
+                <a href="{% url 'home_page' %}" class="text-decoration-none {% if request.path == '/tweet_app/explore/' %}active text-white{% endif %}" style="color:white;">explore</a>
               </h4>
               <h4>
-                <a href="{% url 'profile_page' %}" class="text-decoration-none" style="color:white;">profile</a>
+                <a href="{% url 'profile_page' %}" class="text-decoration-none {% if request.path == '/tweet_app/profile_page/' %}active text-white{% endif %}" style="color:white;">profile</a>
               </h4>
               <h4>
-                <a href="{% url 'recom_people' %}" class="text-decoration-none" style="color:white;">recommendations</a>
+                <a href="{% url 'recom_people' %}" class="text-decoration-none {% if request.path == '/tweet_app/recom_people/' %}active text-white{% endif %}" style="color:white;">recommendations</a>
               </h4>
             </div>
             
@@ -136,18 +164,19 @@
 
             <div class="d-flex flex-column mx-3">
               <h3>
-                <a href="{% url 'home_page' %}" class="text-muted text-decoration-none">Home</a>
+                <a href="{% url 'home_page' %}" class="text-black text-decoration-none {% if request.path == '/tweet_app/home/' %}active text-white{% endif %}">Home</a>
               </h3>
               <h3>
-                <a href="{% url 'home_page' %}" class="text-muted text-decoration-none">trends</a>
+                <a href="{% url 'home_page' %}" class="text-black text-decoration-none {% if request.path == '/tweet_app/trends/' %}active text-white{% endif %}">Trends</a>
               </h3>
               <h3>
-                <a href="{% url 'home_page' %}" class="text-muted text-decoration-none">explore</a>
+                <a href="{% url 'home_page' %}" class="text-black text-decoration-none {% if request.path == '/tweet_app/explore/' %}active text-white{% endif %}">Explore</a>
               </h3>
               <h3>
-                <a href="{% url 'profile_page' %}" class="text-muted text-decoration-none">profile</a>
+                <a href="{% url 'profile_page' %}" class="text-black text-decoration-none {% if request.path == '/tweet_app/profile_page/' %}active text-white{% endif %}">Profile</a>
               </h3>
             </div>
+            
             <div class="d-flex justify-content-start align-items-start my-4 mx-3">
                 <button
                 type="button"
@@ -494,6 +523,94 @@
         </div>
         
       </div>
+    </div>
+
+
+    <div class="button-container d-md-none">
+      
+      <div class="d-flex justify-content-start align-items-start my-4 mx-3">
+        <button
+        type="button"
+        class="btn btn-primary rounded-circle shadow shadow-lg"
+        data-toggle="modal"
+        data-target="#exampleModal2"
+        data-whatever="@getbootstrap"
+        style="z-index: 5;"
+      >
+        
+      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24">
+        <path d="M23 3c-6.62-.1-10.38 2.421-13.05 6.03C7.29 12.61 6 17.331 6 22h2c0-1.007.07-2.012.19-3H12c4.1 0 7.48-3.082 7.94-7.054C22.79 10.147 23.17 6.359 23 3zm-7 8h-1.5v2H16c.63-.016 1.2-.08 1.72-.188C16.95 15.24 14.68 17 12 17H8.55c.57-2.512 1.57-4.851 3-6.78 2.16-2.912 5.29-4.911 9.45-5.187C20.95 8.079 19.9 11 16 11zM4 9V6H1V4h3V1h2v3h3v2H6v3H4z"></path>
+      </svg>
+      
+
+      </button>
+  
+
+
+      <div
+        class="modal fade"
+        id="exampleModal2"
+        tabindex="-1"
+        role="dialog"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true" style="width:90vw;"
+      >
+        <div class="modal-dialog" role="document">
+          <form method="post" id="tweet-form-{{tweet.tweet_id}}" action="{% url 'send_tweet' %}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="modal-content">
+              <div class="modal-header">
+                <div class="d-flex flex-column">
+                  <h4>upload an Image or Video</h4>
+
+                  <input type="file" name="image" accept="image/*, video/*">
+                  <input type="hidden" name="user" value="{{request.user.id}}">
+                </div>
+                <!-- <div id="image-preview"></div> -->
+              </div>
+              <div class="modal-body">
+                
+                <!-- <div class="form-group">
+                  <label for="recipient-name" class="col-form-label"
+                    >Recipient:</label
+                  >
+                  <input type="text" class="form-control" id="recipient-name" />
+                </div> -->
+                <div class="form-group">
+                  <label for="message-text" class="col-form-label"
+                    >Message:</label
+                  >
+                  <textarea class="form-control" id="text" name="text"></textarea>
+                </div>
+                
+              </div>
+              <div class="modal-footer">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  data-dismiss="modal"
+                >
+                  Close
+                </button>
+                <button type="submit" 
+                class="btn btn-primary" 
+                id="hideModalButton" 
+                data-toggle="modal"
+                data-target="#exampleModal"
+                >
+                Send message
+              </button>
+              </div>
+            </div>
+          </form>
+
+        </div>
+      </div>
+
+
+
+    </div>
+
     </div>
 
     <!-- Include Popper.js via CDN -->

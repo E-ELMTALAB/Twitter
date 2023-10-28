@@ -12,6 +12,8 @@ from django.views.decorators.csrf import csrf_exempt
 @csrf_exempt
 def home(request):
 
+    print(request.path)
+
     user_agent = request.META.get('HTTP_USER_AGENT', '').lower()
     is_mobile = 'mobile' in user_agent or 'android' in user_agent
     if is_mobile:

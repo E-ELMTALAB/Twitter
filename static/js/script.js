@@ -315,3 +315,18 @@ document.addEventListener('DOMContentLoaded', function() {
       $('#exampleModal').modal('hide');
     });
   });
+
+
+
+
+  $(document).ready(function() {
+    var currentPath = window.location.pathname; // Get the current page's URL path
+  
+    // Loop through menu links and add the "active" class to the matching link
+    $('.menu a').each(function() {
+      var href = $(this).attr('href');
+      if (href === currentPath) {
+        $(this).parent('li').addClass('active');
+      }
+    });
+  });
