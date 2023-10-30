@@ -18,10 +18,12 @@ from django.contrib import admin
 from django.urls import path , include
 from django.conf.urls.static import static
 from django.conf import settings
+from tweet_app.views import signup_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path("tweet_app/" , include("tweet_app.urls"))
+    path("tweet_app/" , include("tweet_app.urls")), 
+    path("" , signup_view)
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

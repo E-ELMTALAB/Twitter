@@ -7,6 +7,7 @@ from django.views.decorators.http import require_POST
 from django.http import JsonResponse , HttpResponse
 from .forms import TweetForm , UserRegistrationForm , ProfileForm
 from django.views.decorators.csrf import csrf_exempt
+from django.core.paginator import Paginator
 
 # Create your views here.
 @csrf_exempt
@@ -22,6 +23,10 @@ def home(request):
         print("the user is sending requeset with a computer ")
 
     tweets = Tweet.objects.select_related("user").all()
+    # paginator = Paginator(tweets, 3)  # Number of tweets per page
+    # page = request.GET.get('page')
+    # tweets = paginator.get_page(page)
+
     comments = Comment.objects.select_related("user").all()
     recommendations = PersonRecommendation.objects.filter(to_user_id = request.user.id).select_related("from_user").all()
     recommendations = [user.from_user_id for user in recommendations]
@@ -206,6 +211,7 @@ def send_comment(request):
     return JsonResponse({"message":"the comment was received successfully"})
 
 @require_POST
+@csrf_exempt
 def send_tweet(request):
     if request.method == 'POST':
         print("a tweet has been sent")
@@ -281,6 +287,7 @@ def delete_tweet(request):
     
 
 @require_POST
+@csrf_exempt
 def edit_profile(request):
     if request.method == 'POST':
         user_id = request.POST.get("id")
