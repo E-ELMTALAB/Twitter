@@ -92,7 +92,7 @@
 
   </head>
   <body>
-    <div class="container-fluid p-0" style="height:100vh; width:100%;">
+    <div class="container-fluid p-0" style="height:100vh; width:100%; ">
 
 
       <div class="pos-f-t">
@@ -144,7 +144,7 @@
 
       <div class="d-flex flex-row justify-content-center">
 
-        <div class="card d-none d-md-block shadow rounded align-items-center" style="width: 300px; height:500px;">
+        <div class="card d-none d-md-block shadow rounded align-items-center" style="width: 300px; height:500px; position: fixed; left:8%;">
           <div class="d-flex d-none d-md-block flex-column justify-content-center ">
 
 
@@ -260,7 +260,7 @@
 
         {% block content %}
         <div class="d-flex flex-column">
-          <div class="d-flex flex-column overflow-auto infinite-container" id="tweet_dflex" style="height:750px; width:600px;" >
+          <div class="d-flex flex-column infinite-container" id="tweet_dflex" style="width:600px;" >
             {% for tweet in tweets %}
             <div class="card rounded shadow infinite-item">
               <div class="card-header">
@@ -480,13 +480,14 @@
             {% endfor %}
 
           </div>
-          <div class="d-flex">
-            <!-- <h1>this is some shit {{ tweets.has_next }} </h1> -->
-            {% if tweets.has_next %}
-              <!-- <h1>some shit : {{tweets.has_next}}</h1> -->
-              
-              <a class="infinite-more-link" id="next-link" href="?page={{ tweets.next_page_number }}">next</a>
-            {% endif %}
+
+          <div class="row">
+            <div class="col-12">
+                {% if tweets.has_next %}
+                <a class="infinite-more-link" href="?page={{ tweets.next_page_number }}">next</a>
+                {% endif %}
+                </span>
+            </div>
           </div>
 
         </div>
@@ -494,7 +495,7 @@
         {% endblock%}
 
         
-        <div class="card d-none d-md-block rounded shadow" style="height:705px; width:325px;">
+        <div class="card d-none d-md-block rounded shadow" style="height:705px; width:325px; position: fixed; left:70%;">
           <div class="d-flex d-none d-md-block flex-column ">
 
             <div class="d-flex flex-column ">
@@ -648,96 +649,20 @@
     <!-- Include Waypoint Infinite plugin from the same CDN source -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/waypoints/4.0.1/shortcuts/infinite.min.js"></script>
     <script>
-// var loading = false; // Variable to track loading status
-// var loadDelay = 1000; // Delay in milliseconds (adjust as needed)
-// var nextPage = 1; // Track the next page to load
 
-// var container = $('.infinite-container');
+    var infinite = new Waypoint.Infinite({
+                element: $('.infinite-container')[0],
 
-// container.on('scroll', function () {
-//     var containerHeight = container.height();
-//     var containerScrollTop = container.scrollTop();
-//     var containerScrollBottom = containerScrollTop + containerHeight;
-//     var contentHeight = container[0].scrollHeight;
+                offset: 'bottom-in-view',
 
-//     // Check if loading is in progress or if the content is already at the bottom
-//     if (loading || containerScrollBottom < contentHeight - 100) {
-//         return;
-//     }
+                onBeforePageLoad: function () {
+                    $('.loading').show();
+                },
+                onAfterPageLoad: function () {
+                    $('.loading').hide();
+                }
 
-//     // Set loading flag to true
-//     loading = true;
-
-//     // Show loading indicator
-//     $('.loading').show();
-
-//     // Add a delay before loading the next page
-//     setTimeout(function () {
-//         // Simulate an AJAX request to load more content (replace with your actual logic)
-//         var infinite = new Waypoint.Infinite({
-//         element: $('.infinite-container')[0]
-//         });
-//         // For demonstration, we're just appending "Page X" to the container
-//         container.append('<div>Page ' + nextPage + '</div');
-//           nextPage++;
-          
-//         console.log("why is this not working")
-//         // Reset loading flag
-//         loading = false;
-
-//         // Hide loading indicator
-//         $('.loading').hide();
-//     }, loadDelay);
-
-    
-// });
-
-
-// var infinite = new Waypoint.Infinite({
-//             element: $('.infinite-container')[0],
-
-//             offset: 'bottom-in-view',
-
-//             onBeforePageLoad: function () {
-//                 $('.loading').show();
-//             },
-//             onAfterPageLoad: function () {
-//                 $('.loading').hide();
-//             }
-
-//         });
-
-// Initialize Waypoint Infinite
-
-
-  // Function to check if the scroll has reached the bottom of the element with overflow
-  // Function to load more tweets when the "next" link is in the viewport
-  function loadMoreTweets(entries) {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const nextLink = document.getElementById('next-link');
-        if (nextLink) {
-          nextLink.click();
-        }
-      }
-    });
-  }
-
-  // Create an Intersection Observer to watch for the "next" link
-  const options = {
-    root: document.getElementById('tweet_dflex'), // Replace with the actual ID of your container
-    threshold: 1.0 // Trigger when the "next" link is fully in the viewport
-  };
-
-  const observer = new IntersectionObserver(loadMoreTweets, options);
-
-  // Start observing the "next" link
-  const nextLink = document.getElementById('next-link');
-  if (nextLink) {
-    observer.observe(nextLink);
-  }
-
-
+            });
 
   </script>
 
