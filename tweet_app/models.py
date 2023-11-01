@@ -89,6 +89,23 @@ class Tweet(models.Model):
     comments_count = models.PositiveIntegerField(default=0)
     is_retweet = models.BooleanField(default=False)
 
+    def to_dict(self):
+        return {
+            'tweet_id': self.tweet_id,
+            'user': self.user.username,  # Assuming you want the username of the user
+            'text': self.text,
+            'text_label': self.text_label,
+            'image': self.image.url if self.image else None,
+            'image_label': self.image_label,
+            'video': self.video.url if self.video else None,
+            'video_label': self.video_label,
+            'timestamp': self.timestamp.strftime('%Y-%m-%d %H:%M:%S'),
+            'likes_count': self.likes_count,
+            'retweets_count': self.retweets_count,
+            'comments_count': self.comments_count,
+            'is_retweet': self.is_retweet,
+        }
+
     def __str__(self):
         return f"Tweet by {self.user.username} at {self.timestamp}"
     

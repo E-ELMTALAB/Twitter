@@ -22,10 +22,14 @@ def home(request):
     else:
         print("the user is sending requeset with a computer ")
 
-    tweets = Tweet.objects.select_related("user").all()
-    # paginator = Paginator(tweets, 3)  # Number of tweets per page
-    # page = request.GET.get('page')
-    # tweets = paginator.get_page(page)
+    # tweets = Tweet.objects.select_related("user").all()
+    # paginator = Paginator(tweets, 5)  # Number of tweets per page
+    tweets = Tweet.objects.select_related("user").order_by('timestamp').all()
+    # Reverse the order of the tweets on this page
+    tweets = list(reversed(list(tweets)))
+    paginator = Paginator(tweets, 3)  # Number of tweets per page
+    page = request.GET.get('page')
+    tweets = paginator.get_page(page)
 
     comments = Comment.objects.select_related("user").all()
     recommendations = PersonRecommendation.objects.filter(to_user_id = request.user.id).select_related("from_user").all()
@@ -57,23 +61,26 @@ def home(request):
 def test(request):
     return render(request , r"tweet_app\test.html")
 
-# def login_view(request):
-#     # Process the form and authentication logic
-#     if request.method == 'POST':
-#         # ...
-#         if user_is_authenticated:  # Replace with your authentication logic
-#             return HttpResponseRedirect(reverse('profile'))  # Redirect to the 'profile' URL
-#         else:
-#             # Handle authentication failure
-#             pass
-#     else:
-#         form = LoginForm()
 
-#     context = {
-#         'form': form,
-#     }
+def load_tweets(request , num_tweets):
+
+    num_tweets_to_load = 5
+    upper = num_tweets
+    lower = upper - num_tweets_to_load
+    tweets = Tweet.objects.all()[lower:upper]
+    tweets = [tweet.to_dict() for tweet in tweets]
     
-#     return render(request, 'login.html', context)
+    return JsonResponse({"data" : tweets})
+
+
+
+
+
+
+
+
+
+
 @csrf_exempt
 def signup_view(request):
     if request.method == 'POST':

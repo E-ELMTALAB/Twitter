@@ -15,6 +15,7 @@ urlpatterns = [
     path('send_follow_request/', views.send_follow_request, name='send_follow_request'),
     path('delete_tweet/', views.delete_tweet, name='delete_tweet'),
     path("edit_profile/" , views.edit_profile , name="edit_profile"),
-    path("recom_people/" , views.recom_people , name="recom_people")
+    path("recom_people/" , views.recom_people , name="recom_people"),
+    path("load_tweets/<int:num_tweets>/" , views.load_tweets , name="load_tweets")
 ]
 
