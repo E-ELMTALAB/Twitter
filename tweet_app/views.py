@@ -178,6 +178,7 @@ def recom_people(request):
     return render(request , "tweet_app/recom_people.html" , context=context)
 
 @require_POST
+@csrf_exempt
 def like_post(request):
     print(" like button is clicked")
     if request.method == 'POST':
@@ -199,6 +200,7 @@ def like_post(request):
     return HttpResponse(status=204)
     
 @require_POST
+@csrf_exempt
 def send_comment(request):
     print(" a comment is sent")
     if request.method == 'POST':
@@ -236,8 +238,11 @@ def send_tweet(request):
             form.save()
             # return HttpResponse("the tweet information receieved successfuly")
             return redirect("home_page")
+    return redirect("home_page")
+        
         
 @require_POST
+@csrf_exempt
 def send_follow_request(request):
     if request.method == 'POST':
         print("a tweet has been sent")

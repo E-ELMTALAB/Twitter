@@ -92,7 +92,7 @@
 
   </head>
   <body>
-    <div class="container-fluid p-0" style="height:100vh; width:100%; ">
+    <div class="container-fluid p-0" style="height:100vh; width:100vw; ">
 
 
       <div class="pos-f-t">
@@ -144,7 +144,84 @@
 
       <div class="d-flex flex-row justify-content-center">
 
-        <div class="card d-none d-md-block shadow rounded align-items-center" style="width: 300px; height:500px; position: fixed; left:8%;">
+        
+        <div class="d-flex justify-content-start align-items-start my-4 mx-3 d-md-block d-none " style="z-index:2000; top:44%; left:9%; position: fixed;">
+          <button
+            type="button"
+            class="btn btn-primary"
+            id = "pc_button"
+            data-toggle="modal"
+            data-target="#exampleModal"
+            data-whatever="@getbootstrap"
+            style="z-index:2001;"
+          >
+            Post a Tweet
+          </button>
+      
+
+
+          <div
+            class="modal fade"
+            id="exampleModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+            style=" z-index:2002;"
+          >
+            <div class="modal-dialog" role="document" >
+              <form method="post" id="tweet-form-{{tweet.tweet_id}}" action="{% url 'send_tweet' %}" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <div class="d-flex flex-column">
+                      <h4>upload an Image or Video</h4>
+
+                      <input type="file" name="image" accept="image/*, video/*">
+                      <input type="hidden" name="user" value="{{request.user.id}}">
+                    </div>
+
+                  </div>
+                  <div class="modal-body">
+                    
+                    <div class="form-group">
+                      <label for="message-text" class="col-form-label"
+                        >Message:</label
+                      >
+                      <textarea class="form-control" id="text" name="text"></textarea>
+                    </div>
+                    
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button type="submit" 
+                    class="btn btn-primary" 
+                    id="hideModalButton" 
+                    data-toggle="modal"
+                    data-target="#exampleModal"
+                    >
+                    Send message
+                    </button>
+                  </div>
+                </div>
+              </form>
+
+            </div>
+          </div>
+          
+
+
+        </div>
+
+        
+
+        <div class="card d-none d-md-block shadow rounded align-items-center" style="width: 300px; height:500px; position: fixed; left:8%; z-index:20;">
           <div class="d-flex d-none d-md-block flex-column justify-content-center ">
 
 
@@ -175,92 +252,15 @@
               <h3>
                 <a href="{% url 'profile_page' %}" class="text-black text-decoration-none {% if request.path == '/tweet_app/profile_page/' %}active text-white{% endif %}">Profile</a>
               </h3>
-              <button class="btn btn-primary" id="load_tweets">load tweets</button>
             </div>
 
             
-            <div class="d-flex justify-content-start align-items-start my-4 mx-3">
-                <button
-                type="button"
-                class="btn btn-primary"
-                data-toggle="modal"
-                data-target="#exampleModal"
-                data-whatever="@getbootstrap"
-              >
-                Post a Tweet
-              </button>
-          
-
-
-              <div
-                class="modal fade"
-                id="exampleModal"
-                tabindex="-1"
-                role="dialog"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-              >
-                <div class="modal-dialog" role="document">
-                  <form method="post" id="tweet-form-{{tweet.tweet_id}}" action="{% url 'send_tweet' %}" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    <div class="modal-content">
-                      <div class="modal-header">
-                        <div class="d-flex flex-column">
-                          <h4>upload an Image or Video</h4>
-
-                          <input type="file" name="image" accept="image/*, video/*">
-                          <input type="hidden" name="user" value="{{request.user.id}}">
-                        </div>
-                        <!-- <div id="image-preview"></div> -->
-                      </div>
-                      <div class="modal-body">
-                        
-                        <!-- <div class="form-group">
-                          <label for="recipient-name" class="col-form-label"
-                            >Recipient:</label
-                          >
-                          <input type="text" class="form-control" id="recipient-name" />
-                        </div> -->
-                        <div class="form-group">
-                          <label for="message-text" class="col-form-label"
-                            >Message:</label
-                          >
-                          <textarea class="form-control" id="text" name="text"></textarea>
-                        </div>
-                        
-                      </div>
-                      <div class="modal-footer">
-                        <button
-                          type="button"
-                          class="btn btn-secondary"
-                          data-dismiss="modal"
-                        >
-                          Close
-                        </button>
-                        <button type="submit" 
-                        class="btn btn-primary" 
-                        id="hideModalButton" 
-                        data-toggle="modal"
-                        data-target="#exampleModal"
-                        >
-                        Send message
-                      </button>
-                      </div>
-                    </div>
-                  </form>
-
-                </div>
-              </div>
-
-
-
-            </div>
           </div>
         </div>
 
         {% block content %}
         <div class="d-flex flex-column">
-          <div class="d-flex flex-column infinite-container" id="tweet_dflex" style="width:600px;" >
+          <div class="d-flex flex-column infinite-container" id="tweet_dflex" style="width:100vw;" >
             {% for tweet in tweets %}
             <div class="card rounded shadow infinite-item">
               <div class="card-header">
@@ -481,10 +481,17 @@
 
           </div>
 
+          <div class="d-flex justify-content-center align-items-center " style="z-index:5000;">
+            <button class="btn btn-primary loading">
+                <span class="spinner-border spinner-border-sm"></span>
+                Please wait...
+            </button>
+          </div>
+
           <div class="row">
             <div class="col-12">
                 {% if tweets.has_next %}
-                <a class="infinite-more-link" href="?page={{ tweets.next_page_number }}">next</a>
+                <a class="infinite-more-link text-decoration-none text-white" href="?page={{ tweets.next_page_number }}">next</a>
                 {% endif %}
                 </span>
             </div>
@@ -547,6 +554,7 @@
         <button
         type="button"
         class="btn btn-primary rounded-circle shadow shadow-lg"
+        id = "mobile_button"
         data-toggle="modal"
         data-target="#exampleModal2"
         data-whatever="@getbootstrap"
@@ -571,7 +579,7 @@
         aria-hidden="true" style="width:90vw;"
       >
         <div class="modal-dialog" role="document">
-          <form method="post" id="tweet-form-{{tweet.tweet_id}}" action="{% url 'send_tweet' %}" enctype="multipart/form-data">
+          <form method="post" id="tweet-form-{{tweet.tweet_id}}-mobile" action="{% url 'send_tweet' %}" enctype="multipart/form-data">
             {% csrf_token %}
             <div class="modal-content">
               <div class="modal-header">
@@ -609,9 +617,9 @@
                 </button>
                 <button type="submit" 
                 class="btn btn-primary" 
-                id="hideModalButton" 
+                id="hideModalButton2" 
                 data-toggle="modal"
-                data-target="#exampleModal"
+                data-target="#exampleModal2"
                 >
                 Send message
               </button>
@@ -625,6 +633,8 @@
 
 
     </div>
+
+    
 
     </div>
 
