@@ -21,72 +21,72 @@ updateContainerSize();
 
 
 
-$(document).ready(function() {
-    $('form[id^="comment-form"]').submit(function(e) {
-        e.preventDefault(); // Prevent the form from submitting traditionally
+// $(document).ready(function() {
+//     $('form[id^="comment-form"]').submit(function(e) {
+//         e.preventDefault(); // Prevent the form from submitting traditionally
         
-        var form = $(this);
-        var formData = form.serialize();
+//         var form = $(this);
+//         var formData = form.serialize();
         
-        console.log("the comment JavaScript function man");
+//         console.log("the comment JavaScript function man");
 
-        const comment_container = form.closest('.modal-content').find('[id^="comment_container"]');
-        // console.log("the comment container is : " , comment_container)
-        const comment = form.find('#message-text').val();
-        const user_image = document.getElementById("user_image").src
-        console.log(user_image)
-        const user_name = document.getElementById("user_name").innerText
-        const user_username = document.getElementById("user_username").innerText
+//         const comment_container = form.closest('.modal-content').find('[id^="comment_container"]');
+//         // console.log("the comment container is : " , comment_container)
+//         const comment = form.find('#message-text').val();
+//         const user_image = document.getElementById("user_image").src
+//         console.log(user_image)
+//         const user_name = document.getElementById("user_name").innerText
+//         const user_username = document.getElementById("user_username").innerText
         
-        $.ajax({
-            type: 'POST',
-            url: "/tweet_app/send_comment/",
-            data: formData,
-            success: function(response) {
-                if (response.message) {
-                    // alert(response.message);
-                    // Close the modal or handle success as needed
+//         $.ajax({
+//             type: 'POST',
+//             url: "/tweet_app/send_comment/",
+//             data: formData,
+//             success: function(response) {
+//                 if (response.message) {
+//                     // alert(response.message);
+//                     // Close the modal or handle success as needed
 
-                    const newCommentDiv = document.createElement('div');
-                    newCommentDiv.className = 'd-flex flex-row my-3';
+//                     const newCommentDiv = document.createElement('div');
+//                     newCommentDiv.className = 'd-flex flex-row my-3';
                   
 
 
 
-                    newCommentDiv.innerHTML = `
-                    <div class="d-flex flex-row align-items-center">
+//                     newCommentDiv.innerHTML = `
+//                     <div class="d-flex flex-row align-items-center">
 
 
-                        <img class="rounded-circle mx-3" src="${user_image}" style="width:70px; height:70px;"/>
+//                         <img class="rounded-circle mx-3" src="${user_image}" style="width:70px; height:70px;"/>
 
 
-                      <div class="d-flex flex-column">
-                        <h6 class="mx-2 p-0 my-0">${user_name}</h6>
-                        <p class="text-muted mx-2 p-0 my-0">${user_username}</p>
-                      </div>
-                    </div>
-                    <p>${comment}</p>
-`
-                    // // Append the new comment div to the parent container
-                    // comment_container.appendChild(newCommentDiv);
+//                       <div class="d-flex flex-column">
+//                         <h6 class="mx-2 p-0 my-0">${user_name}</h6>
+//                         <p class="text-muted mx-2 p-0 my-0">${user_username}</p>
+//                       </div>
+//                     </div>
+//                     <p>${comment}</p>
+// `
+//                     // // Append the new comment div to the parent container
+//                     // comment_container.appendChild(newCommentDiv);
 
-                    if (comment_container.length > 0) {
-                        // Ensure that comment_container has elements
-                        comment_container[0].appendChild(newCommentDiv);
-                      }
+//                     if (comment_container.length > 0) {
+//                         // Ensure that comment_container has elements
+//                         comment_container[0].appendChild(newCommentDiv);
+//                       }
 
-                } else if (response.error) {
-                    alert(response.error);
-                    // Handle error as needed
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('Error: ' + error);
-                // Handle AJAX errors as needed
-            }
-        });
-    });
-});
+//                 } else if (response.error) {
+//                     alert(response.error);
+//                     // Handle error as needed
+//                 }
+//             },
+//             error: function(xhr, status, error) {
+//                 console.error('Error: ' + error);
+//                 // Handle AJAX errors as needed
+//             }
+//         });
+//     });
+// });
 
 
 $(document).ready(function() {
@@ -197,8 +197,8 @@ const container = document.getElementById("tweet_dflex");
 
 container.addEventListener("click", function (event) {
   // Check if the event target is a button element
-//   console.log(event.target.id)
-//   console.log(event.target.tagName)
+  console.log(event.target.id)
+  console.log(event.target.tagName)
   if ((event.target.id.startsWith("like_button"))) {
       console.log("in the new click function")
     // Determine which button was clicked by examining its attributes or content
@@ -233,6 +233,71 @@ container.addEventListener("click", function (event) {
         heartIcon.setAttribute("fill", "red");
     }
   }
+
+  if(event.target.id.startsWith("comment_button_submit")){
+
+    event.preventDefault();
+    const comment_element = event.target;
+    const form = comment_element.closest("#comment-button-div").querySelector("form");
+    const formData = $(form).serialize();
+    const comment_container = form.closest('.modal-content').querySelector('[id^="comment_container"]');
+    console.log("the comment container " , comment_container)
+
+    const comment = form.querySelector('#message-text').value;
+    const user_image = document.getElementById("user_image").src;
+    const user_name = document.getElementById("user_name").innerText;
+    const user_username = document.getElementById("user_username").innerText;
+    console.log("about to send the comment with the new function ");
+
+    $.ajax({
+      type: 'POST',
+      url: "/tweet_app/send_comment/",
+      data: formData,
+      success: function(response) {
+          if (response.message) {
+              // alert(response.message);
+              // Close the modal or handle success as needed
+
+            const newCommentDiv = document.createElement('div');
+            newCommentDiv.className = 'd-flex flex-row my-3';
+          
+
+
+
+            newCommentDiv.innerHTML = `
+            <div class="d-flex flex-row align-items-center">
+
+
+                <img class="rounded-circle mx-3" src="${user_image}" style="width:70px; height:70px;"/>
+
+
+              <div class="d-flex flex-column">
+                <h6 class="mx-2 p-0 my-0">${user_name}</h6>
+                <p class="text-muted mx-2 p-0 my-0">${user_username}</p>
+              </div>
+            </div>
+            <p>${comment}</p>
+`
+
+
+            // Ensure that comment_container has elements
+            comment_container.appendChild(newCommentDiv);
+            comment_container.scrollTop += 250;
+
+          } else if (response.error) {
+              alert(response.error);
+              // Handle error as needed
+          }
+      },
+      error: function(xhr, status, error) {
+          console.error('Error: ' + error);
+          // Handle AJAX errors as needed
+      }
+  });
+
+  }
+
+
 });
 
 

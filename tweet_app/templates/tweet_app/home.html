@@ -356,7 +356,7 @@
 
 
 
-                  <div class="d-flx" id="like-button-div">
+                  <div class="d-flx" id="comment-button-div">
                     <button
                       type="button"
                       class="btn btn-link d-flex align-items-center text-muted mx-4"
@@ -364,6 +364,7 @@
                       data-target="#CommentModal{{tweet.tweet_id}}" 
                       data-toggle="modal"
                       data-whatever="@getbootstrap"
+                      id="comment_button"
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -376,12 +377,14 @@
                         stroke-linecap="round"
                         stroke-linejoin="round"
                         class="feather feather-message-square icon-md mb-0"
+                        id="comment_button_svg"
                       >
                         <path
                           d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"
+                          id="comment_button_path"
                         ></path>
                       </svg>
-                      <p class="d-none d-md-block mx-1 my-2">Comment</p>
+                      <p id="comment_button_p" class="d-none d-md-block mx-1 my-2">Comment</p>
                     </button>
             
                     <div class="modal fade" id="CommentModal{{tweet.tweet_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -432,7 +435,7 @@
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <button type="submit" class="btn btn-primary">Send Comment </button>
+                                <button id="comment_button_submit" type="submit" class="btn btn-primary">Send Comment </button>
                               <input type="hidden" name="user_id" value="{{request.user.id}}">
                             </div>
                           </form>
