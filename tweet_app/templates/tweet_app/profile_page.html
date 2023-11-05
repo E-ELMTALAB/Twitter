@@ -3,7 +3,7 @@
 {% extends 'tweet_app/home.html' %} {% block content %}
 <div class="d-flex flex-column overflow-auto m-0 p-0" style="width:700px; height:1000px;">
 
-  <div class="card shadow d-md-none d-md-block" id="uniqueDiv" style="width: 90%; height: 40vw;">
+  <div class="card shadow d-md-none d-md-block" id="uniqueDiv1" style="width: 90%; height: 40vw;">
     <div
       class="d-flex flex-row justify-content-start"
       style="width: 100%; height: 100%"
@@ -106,12 +106,12 @@
           <p>following {{following_count}}</p>
           <p>followers {{followers_count}}</p>
         </div>
-        <div class="d-flex justify-content-center align-items-center">
+        <div class="d-flex justify-content-center align-items-center" style="z-index: 10000;">
 
-          <button class="btn btn-primary" data-target="#profileModal{{request.user.id}}" data-toggle="modal" 
+          <button class="btn btn-primary" data-target="#profileModal{{request.user.id}}-1" data-toggle="modal" 
           style="font-size: 1.2vw; width:8vw; height:2.7vw;" >Edit profile</button>
 
-          <div class="modal fade" id="profileModal{{request.user.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal fade" id="profileModal{{request.user.id}}-1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="z-index:10000;">
             <div class="modal-dialog" role="document">
               <div class="modal-content">
                 <div class="modal-header">

@@ -8,6 +8,9 @@ from django.http import JsonResponse , HttpResponse
 from .forms import TweetForm , UserRegistrationForm , ProfileForm
 from django.views.decorators.csrf import csrf_exempt
 from django.core.paginator import Paginator
+from tweet_app import cropper as cropper
+import os
+from PIL import Image
 
 # Create your views here.
 @csrf_exempt
@@ -228,15 +231,23 @@ def send_tweet(request):
         user_id = request.POST.get("user")
         file = request.POST.get("image")
         text = request.POST.get("text")
-        print(request.FILES)
+        # root_path = os.path.join("C:\python\django\twitter\media\tweet_images" , str(request.FILES["image"]))
+        print(request.FILES["image"])
         print("the user id is :", user_id)
         print("the file uploaded is :",file)
         print("the text of the tweet is :",text)
         form = TweetForm(request.POST, request.FILES)
         if form.is_valid():
             # file is saved
+            image_name = form.cleaned_data["image"].name
+
             print("the forms is valid ")
             form.save()
+
+            output = os.path.join(r"C:\python\django\twitter\media\tweet_images" , image_name)
+            image = Image.open(output)
+            image.save(output , optimize=True, quality=50)
+
             # return HttpResponse("the tweet information receieved successfuly")
             return redirect("home_page")
     return redirect("home_page")
@@ -266,6 +277,7 @@ def send_follow_request(request):
     return HttpResponse(status=204)
 
 @require_POST
+@csrf_exempt
 def delete_tweet(request):
     if request.method == 'POST':
         print("a tweet is going to be deleted")
@@ -297,7 +309,7 @@ def delete_tweet(request):
 #         user.save()
 
 #         return redirect("profile_page")
-    
+
 
 @require_POST
 @csrf_exempt
@@ -312,17 +324,22 @@ def edit_profile(request):
             user_id = form.cleaned_data.get("id")
             new_username = form.cleaned_data.get("username")
             new_name = form.cleaned_data.get("name")
-            new_profile_picture = form.cleaned_data.get("profile_picture")
-
+            new_profile_picture = form.cleaned_data.get("profile_picture_path")
             # user = User.objects.get(id=user_id)
             user.username = new_username
             user.name = new_name
 
-            if new_profile_picture:
-                user.profile_picture_path = new_profile_picture.name
+            # if new_profile_picture:
+                # user.profile_picture_path = new_profile_picture.name
+                # print("the profile has a new image")
 
 
             user.save()
+
+            output = os.path.join(r"C:\python\django\twitter\media\profile_pictures_path" , new_profile_picture.name)
+            print("the output is " , output)
+            cropper.crop_to_square(output)
+            
             return redirect("profile_page")
         else:
             # Form is not valid, access and handle errors
