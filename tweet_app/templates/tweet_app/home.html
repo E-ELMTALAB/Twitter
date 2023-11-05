@@ -174,10 +174,10 @@
                 {% csrf_token %}
                 <div class="modal-content">
                   <div class="modal-header">
-                    <div class="d-flex flex-column">
+                    <div class="d-flex flex-column justify-content-center align-items-center" id="main_modal_header" style="width:100%;" >
                       <h4>upload an Image or Video</h4>
-
-                      <input type="file" name="image" accept="image/*, video/*">
+                      <div class="d-flex align-items-center justify-content-center" id="main_modal_header_preview">shit</div>
+                      <input class="my-3" type="file" name="image" id="image_input" accept="image/*, video/*">
                       <input type="hidden" name="user" value="{{request.user.id}}">
                     </div>
 
@@ -228,13 +228,14 @@
             <div class="d-flex align-items-start mt-5 mb-4">
               
             {% if request.user.profile_picture_path %}
-              <img class="rounded-circle mx-3" src="{{request.user.profile_picture_path.url}}" style="width:85px; height:85px;"/>
+              <img id="user_image" class="rounded-circle mx-3" src="{{request.user.profile_picture_path.url}}" style="width:85px; height:85px;"/>
             {% else %}
-              <img class="rounded-circle mx-3" src="https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png" style="width:85px; height:85px;"/>
+              <img id="user_image" class="rounded-circle mx-3" src="https://cdn.icon-icons.com/icons2/3065/PNG/512/profile_user_account_icon_190938.png" style="width:85px; height:85px;"/>
             {% endif %}
 
               <div class="mx-3">
-                <h5 class="mt-3">{{request.user.username}}</h5>
+                <h5 id="user_username" class="mt-3">{{request.user.username}}</h5>
+                <h4 id="user_name" class="mt-1">{{request.user.name}}</h4>
                 <p class="m-0">{{request.user.email}}</p>
               </div>
             </div>
@@ -294,13 +295,13 @@
 
                   <form action="{% url 'like_post' %}" method="post">
                     {% csrf_token %}
-                    <div class="d-flx" id="like-button-div">
+                    <div class="d-flx" id="like_button_div">
                       <button
                         type="submit"
                         class="btn btn-link d-flex align-items-center text-muted mx-4"
                         name="like-button"
                         value="{{tweet.tweet_id}}"
-                        id="{{ tweet.tweet_id }}"
+                        id="like_button_id"
                       >
                         <input name="user_id" value="{{request.user.id}}" type="hidden">
                         <input name="tweet_id" value="{{tweet.tweet_id}}" type="hidden">
@@ -317,11 +318,13 @@
                             stroke-linecap="round"
                             stroke-linejoin="round"
                             class="feather feather-heart icon-md mb-0"
-                            id="svg"
+                            id="like_button_svg"
+                            style="pointer-events: none;"
                           >
                           
                           <path
                             d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                            id="like_button_path"
                           ></path>
                           </svg>
                         {% else %}
@@ -336,15 +339,16 @@
                             stroke-linecap="round"
                             stroke-linejoin="round"
                             class="feather feather-heart icon-md mb-0"
-                            id="svg"
+                            id="like_button_svg"
                           >
                           
                           <path
                             d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                            id = "like_button_path"
                           ></path>
                           </svg>
                         {% endif %}
-                        <p class="d-none d-md-block mx-1 my-2">Like</p>
+                        <p id="like_button_p" class="d-none d-md-block mx-1 my-2">Like</p>
                       </button>
                     </div>
                   </form>
@@ -390,7 +394,7 @@
                             <!-- <button type="button" class="close rounded-circle" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button> -->
-                            <div class="d-flex flex-column overflow-auto" style="height:400px;">
+                            <div class="d-flex flex-column overflow-auto" id="comment_container" style="height:400px;">
                               {% for comment in comments%}
                                 {% if comment.tweet_id == tweet.tweet_id %}
                                   <div class="d-flex flex-row my-3" id="comments_{{tweet.tweet_id}}">
@@ -417,7 +421,7 @@
                           </div>
 
 
-                          <form method="post" id="comment-form-{{tweet.tweet_id}}" action="{% url 'send_comment' %}">
+                          <form method="post" id="comment-form-{{tweet.tweet_id}}">
                             {% csrf_token %}
                             <div class="modal-body">
                               <div class="form-group">
@@ -428,11 +432,7 @@
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <form method="post" action="{% url 'send_comment' %}">
-                                {% csrf_token %}
-                                <button type="submit" class="btn btn-primary" data-target="#CommentModal{{tweet.tweet_id}}" 
-                                data-toggle="modal">Send Comment </button>
-                              </form>
+                                <button type="submit" class="btn btn-primary">Send Comment </button>
                               <input type="hidden" name="user_id" value="{{request.user.id}}">
                             </div>
                           </form>
@@ -585,8 +585,8 @@
               <div class="modal-header">
                 <div class="d-flex flex-column">
                   <h4>upload an Image or Video</h4>
-
-                  <input type="file" name="image" accept="image/*, video/*">
+                  <div class="d-flex align-items-center justify-content-center" id="secondary_modal_header_preview">something else</div>
+                  <input class="my-2" id="second_image_input" type="file" name="image" accept="image/*, video/*">
                   <input type="hidden" name="user" value="{{request.user.id}}">
                 </div>
                 <!-- <div id="image-preview"></div> -->

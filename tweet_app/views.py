@@ -218,6 +218,7 @@ def send_comment(request):
     #     "tweets" : tweets
     # }
     return JsonResponse({"message":"the comment was received successfully"})
+    # return HttpResponse(status=204)
 
 @require_POST
 @csrf_exempt

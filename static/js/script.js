@@ -29,15 +29,52 @@ $(document).ready(function() {
         var formData = form.serialize();
         
         console.log("the comment JavaScript function man");
+
+        const comment_container = form.closest('.modal-content').find('[id^="comment_container"]');
+        // console.log("the comment container is : " , comment_container)
+        const comment = form.find('#message-text').val();
+        const user_image = document.getElementById("user_image").src
+        console.log(user_image)
+        const user_name = document.getElementById("user_name").innerText
+        const user_username = document.getElementById("user_username").innerText
         
         $.ajax({
             type: 'POST',
-            url: form.attr('action'),
+            url: "/tweet_app/send_comment/",
             data: formData,
             success: function(response) {
                 if (response.message) {
-                    alert(response.message);
+                    // alert(response.message);
                     // Close the modal or handle success as needed
+
+                    const newCommentDiv = document.createElement('div');
+                    newCommentDiv.className = 'd-flex flex-row my-3';
+                  
+
+
+
+                    newCommentDiv.innerHTML = `
+                    <div class="d-flex flex-row align-items-center">
+
+
+                        <img class="rounded-circle mx-3" src="${user_image}" style="width:70px; height:70px;"/>
+
+
+                      <div class="d-flex flex-column">
+                        <h6 class="mx-2 p-0 my-0">${user_name}</h6>
+                        <p class="text-muted mx-2 p-0 my-0">${user_username}</p>
+                      </div>
+                    </div>
+                    <p>${comment}</p>
+`
+                    // // Append the new comment div to the parent container
+                    // comment_container.appendChild(newCommentDiv);
+
+                    if (comment_container.length > 0) {
+                        // Ensure that comment_container has elements
+                        comment_container[0].appendChild(newCommentDiv);
+                      }
+
                 } else if (response.error) {
                     alert(response.error);
                     // Handle error as needed
@@ -127,33 +164,75 @@ $(document).ready(function() {
 // });
 
 
-document.getElementById("tweet_dflex").querySelectorAll("button[name='like-button']").forEach(function (button) {
-    button.addEventListener("click", function (event) {
-        event.preventDefault();
+// document.getElementById("tweet_dflex").querySelectorAll("button[name='like-button']").forEach(function (button) {
+//     button.addEventListener("click", function (event) {
+//         event.preventDefault();
 
-        var postId = button.getAttribute("data-post-id");
+//         var postId = button.getAttribute("data-post-id");
+//         var heartIcon = button.querySelector("svg");
+        
+
+//         var form = $(this).closest('form');
+//         // var form = $(this);
+//         var formData = form.serialize();
+
+        
+//         $.ajax({
+//             type: 'POST',
+//             url: form.attr('action'),
+//             data: formData,
+//             dataType: "json"
+//         });
+        
+//         // For example, you can toggle the fill color between red and none:
+//         if (heartIcon.getAttribute("fill") === "red") {
+//             heartIcon.setAttribute("fill", "none");
+//         } else {
+//             heartIcon.setAttribute("fill", "red");
+//         }
+//     });
+// });
+
+const container = document.getElementById("tweet_dflex");
+
+container.addEventListener("click", function (event) {
+  // Check if the event target is a button element
+//   console.log(event.target.id)
+//   console.log(event.target.tagName)
+  if ((event.target.id.startsWith("like_button"))) {
+      console.log("in the new click function")
+    // Determine which button was clicked by examining its attributes or content
+    var button = event.target
+    var postId = button.getAttribute("data-post-id");
+
+    if(event.target.tagName="P"){
+        var temp = button.closest('button');
+        var heartIcon = temp.querySelector('svg')
+        console.log(heartIcon)
+    }
+    else {
         var heartIcon = button.querySelector("svg");
-        
+    }
 
-        var form = $(this).closest('form');
-        // var form = $(this);
-        var formData = form.serialize();
+    // var form = $(this).closest('form');
+    // // var form = $(this);
+    // var formData = form.serialize();
 
-        
-        $.ajax({
-            type: 'POST',
-            url: form.attr('action'),
-            data: formData,
-            dataType: "json"
-        });
-        
-        // For example, you can toggle the fill color between red and none:
-        if (heartIcon.getAttribute("fill") === "red") {
-            heartIcon.setAttribute("fill", "none");
-        } else {
-            heartIcon.setAttribute("fill", "red");
-        }
-    });
+    
+    // $.ajax({
+    //     type: 'POST',
+    //     url: form.attr('action'),
+    //     data: formData,
+    //     dataType: "json"
+    // });
+    
+    // For example, you can toggle the fill color between red and none:
+    if (heartIcon.getAttribute("fill") === "red") {
+        heartIcon.setAttribute("fill", "none");
+    } else {
+        heartIcon.setAttribute("fill", "red");
+    }
+  }
 });
 
 
@@ -226,4 +305,42 @@ document.addEventListener('DOMContentLoaded', function() {
         $(this).parent('li').addClass('active');
       }
     });
+  });
+
+
+  const imageInput = document.getElementById('image_input');
+  const secImageInput = document.getElementById('second_image_input');
+  const imagePreview = document.getElementById('main_modal_header_preview');
+  const secImagePreview = document.getElementById('secondary_modal_header_preview');
+
+  imageInput.addEventListener('change', function () {
+    imagePreview.innerHTML = ''; // Clear previous previews
+  
+    for (const file of imageInput.files) {
+      const image = document.createElement('img');
+      image.src = URL.createObjectURL(file); // Create a temporary URL for the image
+      image.style.width= "65%" ;
+  
+      image.onload = () => {
+        URL.revokeObjectURL(image.src); // Clean up the URL when the image is loaded
+      };
+  
+      imagePreview.appendChild(image);
+    }
+  });
+
+  secImageInput.addEventListener('change', function () {
+    secImagePreview.innerHTML = ''; // Clear previous previews
+  
+    for (const file of secImageInput.files) {
+      const sec_image = document.createElement('img');
+      sec_image.src = URL.createObjectURL(file); // Create a temporary URL for the image
+      sec_image.style.width= "65%" ;
+  
+      sec_image.onload = () => {
+        URL.revokeObjectURL(sec_image.src); // Clean up the URL when the image is loaded
+      };
+  
+      secImagePreview.appendChild(sec_image);
+    }
   });
